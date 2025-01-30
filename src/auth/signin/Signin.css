@@ -1,0 +1,29 @@
+.signin-right-con {
+    background: url(/public/Rectangle.png) no-repeat ;
+    /* background-position: center; */
+    background-size: cover;
+
+}
+
+
+@media screen and (max-width: 1334px) {
+
+    .right-container{
+        width: 60% !important; 
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .right-container{
+        width: 100% !important; 
+    }
+}
+
+
+
+
+@media screen and (max-width: 325px) {
+    .signInAccount {
+        flex-direction: column;
+    }
+}

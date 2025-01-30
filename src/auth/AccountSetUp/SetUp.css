@@ -1,0 +1,23 @@
+.progress-bar div {
+    background: linear-gradient(to right, #CB1E33, #9A2444, #692B56, #383268);
+}
+
+@media screen and (max-width: 1334px) {
+
+    .auth-right-container{
+        width: 60% !important; 
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .auth-right-container{
+        width: 80% !important; 
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .auth-right-container{
+        width: 100% !important; 
+        padding: auto 20px;
+    }
+}

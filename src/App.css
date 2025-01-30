@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "GeneralSans";
+  src: url("./assets/fonts/GeneralSans_Complete/GeneralSans_Complete/Fonts/OTF/GeneralSans-Medium.otf")
+    format("opentype");
+  font-weight: medium;
+  font-style: normal;
+}
+
+body {
+  font-family: "GeneralSans", sans-serif;
+}

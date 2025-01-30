@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+.quick-links::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.signin-icons {
+    width: 20px;
+    height: 20px;
+}
+
+
+.overflow-y-auto::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
