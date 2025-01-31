@@ -8,14 +8,12 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import "./App.css";
 
-// Import Components
 import Signin from "@/auth/signin/Signin";
 import Signup from "@/auth/signup/Signup";
 import SetUp from "./auth/AccountSetUp/SetUp";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import PasswordReset from "./auth/forgottenPassword/PasswordReset";
 
-// Dashboard Pages
 import Campaigns from "./pages/Campaigns/Campaigns";
 import Analytics from "./pages/Analytics/Analytics";
 import Setting from "./pages/Settings/Setting";
@@ -118,3 +116,5 @@ const App = () => {
 };
 
 export default App;
+
+// All has been commented for proper understanding... so yeah! that's it for this file.
