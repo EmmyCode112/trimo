@@ -28,7 +28,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-[#605B86] h-[100vh] flex flex-col justify-between w-[263px]">
+    <div className="bg-[#605B86] h-full flex flex-col justify-between w-[263px]">
       <div>
         <div className="pt-[32px] pb-[24px] pl-[24px]">
           <img src={SideBarIcons.TriimoIcon} alt="Triimo Logo" />
@@ -39,11 +39,13 @@ const Sidebar = () => {
             <li
               onClick={() => {
                 setActiveLink(link.label);
-                navigate(`${link.route}`);
+                if (link.route) {
+                  navigate(link.route);
+                }
               }}
               key={index}
               className={`flex items-center py-2 px-3 cursor-pointer rounded-[10px] justify-between text-[#EBEBF0] font-medium 
-                hover:bg-[#e9e9e92f]  ${
+                hover:bg-[#e9e9e92f] ${
                   activeLink === link.label ? "bg-[#e9e9e92f]" : ""
                 } ${
                 link.label === "Settings"
