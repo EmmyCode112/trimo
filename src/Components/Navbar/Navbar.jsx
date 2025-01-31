@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { Icons, SideBarIcons } from "../../assets/assets";
+import {useState, useEffect} from "react"
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
   const wallet = [
     {
       balance: 0,
@@ -9,12 +10,26 @@ const Navbar = () => {
     },
   ];
 
+
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1030);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1030);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const location = useLocation();
   const routesMap = {
     "/campaigns": [SideBarIcons.homeIconActive, "Campaigns"],
     "/contacts": [SideBarIcons.homeIconActive, "Contacts"],
     "/templates": [SideBarIcons.homeIconActive, "Templates"],
     "/settings": [SideBarIcons.homeIconActive, "Settings"],
+    "/wallet": [SideBarIcons.homeIconActive, "Wallet"],
   };
   const breadcrumb = routesMap[location.pathname] || [
     SideBarIcons.homeIconActive,
@@ -24,7 +39,7 @@ const Navbar = () => {
     <div className="flex justify-between px-[31px] py-[19px] border-b border-b-[#F1F1F1] items-center">
       <div className="flex items-center gap-2">
         {/* Home Icon */}
-        <img src={SideBarIcons.homeIconActive} alt="Home" />
+        <img src={SideBarIcons.homeIconActive} alt="Home" onClick={isSmallScreen ? toggleSidebar : null}/>
         <img src={Icons.arrowRight} alt="Arrow Right" />
         {breadcrumb.length > 1 && (
           <>

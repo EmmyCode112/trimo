@@ -24,6 +24,7 @@ import templateIcon from "./Icons/keyboard-open.png";
 import contactIcon from "./Icons/note.png";
 import integrationIcon from "./Icons/data.png";
 import CodeRigiIcon from "./Icons/CodeRigi.png";
+import croseIcon from "./Icons/x.png";
 
 import emptyWallet from "./Icons/empty-wallet.png";
 import addWallet from "./Icons/add-square.png";
@@ -74,4 +75,5 @@ export const Icons = {
   keyIcon,
   warningIcon,
   emptyState,
+  croseIcon,
 };

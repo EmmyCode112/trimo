@@ -3,6 +3,7 @@ import MessageSentChart from "./MessageSentChart";
 import NotificationAlert from "./NotificationAlert";
 import TopCompaniesChart from "./TopCompaniesChart";
 import RecentMessage from "./RecentMessage";
+import "./Dashboard.css"
 
 const Dashboard = ({handleLogout}) => {
   const cardsData = [
@@ -35,7 +36,7 @@ const Dashboard = ({handleLogout}) => {
   <p>Logout</p>
 </div>
       <div className="px-[31px] py-[32px]">
-        <div className="flex justify-between align-center flex-wrap cl">
+        <div className="flex justify-between align-center flex-wrap ga-[20px]">
           <header>
             <h1 className="text-[#1A1A1A] text-[24px] font-medium">
               Welcome to Your Triimo Dashboard
@@ -45,7 +46,7 @@ const Dashboard = ({handleLogout}) => {
               real-time insights.
             </p>
           </header>
-          <search className="flex items-center gap-2 px-[10px] rounded-[8px] border border-[#D0D5DD]">
+          <search className="flex items-center gap-2 px-[10px] rounded-[8px] border border-[#D0D5DD] w-[300px] h-[44px]">
             <img
               src={Icons.searchIcon}
               alt="search"
@@ -54,7 +55,7 @@ const Dashboard = ({handleLogout}) => {
             <input
               type="text"
               placeholder="Search"
-              className="p-1 outline-none"
+              className="p-1 outline-none w-full h-full"
             />
           </search>
         </div>

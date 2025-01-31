@@ -1,0 +1,44 @@
+.scrollbar-hide::-webkit-scrollbar {
+    width: 0;
+}
+
+@media screen and (max-width: 640px) {
+  .low-balance {
+    height: auto;
+    position: static !important;
+    padding: 10px 20px !important;
+  }
+  .low-balance p {
+    font-size: 12px;
+  }
+
+  .low-balance img {
+    position: static !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .wallet-balance-card {
+    width: 80% !important;
+  }
+  .wallet-balance-card .balance {
+    font-size: 38px !important;
+}
+}
+@media screen and (max-width: 604px) {
+  .wallet-balance-card {
+    width: 90% !important;
+
+    ul {
+        flex-wrap: wrap;
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+    .wallet-balance-card {
+      width: 100% !important;
+    }
+    .wallet-balance-card .balance {
+        font-size: 28px !important;
+    }
+  }

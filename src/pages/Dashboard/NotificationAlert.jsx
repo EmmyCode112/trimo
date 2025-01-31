@@ -44,7 +44,9 @@ const NotificationAlert = () => {
   return (
     <container className="dashboard-table-container">
       <div className="w-full rounded-[15px] py-[20px] px-[20px] flex flex-col gap-[20px] shadow-md border">
-        <h2>Notification & Alert</h2>
+        <h2 className="text-[#3F3E3E] text-[18px] font-medium">
+          Notification & Alert
+        </h2>
 
         <table className="rounded-[8px]">
           <thead>
@@ -76,12 +78,19 @@ const NotificationAlert = () => {
                     </p>
                   </td>
                   <td className="flex items-center gap-[10px]">
-                    <img src={notification.icon} alt="icon" className="w-40px h-[40px]" />
-                    <p className="text-[13px] font-medium text-[#1A1A1A]">{notification.message}</p></td>
+                    <img
+                      src={notification.icon}
+                      alt="icon"
+                      className="w-40px h-[40px]"
+                    />
+                    <p className="text-[13px] font-medium text-[#1A1A1A]">
+                      {notification.message}
+                    </p>
+                  </td>
                   <td>
-                    <Button 
+                    <Button
                       label={notification.action}
-                      className="py-[10px] px-[16px] text-[#344054] rounded-[8px] border border-[#D0D5DD] hover:bg-[#eeeff0] text-[10px] w-[125px]"
+                      className="py-[10px] px-[16px] text-[#344054] rounded-[8px] border border-[#D0D5DD] hover:bg-[#eeeff0] text-[13px] w-[140px]"
                     />
                   </td>
                 </tr>
@@ -99,8 +108,9 @@ const NotificationAlert = () => {
                       No Notifications or Alerts
                     </p>
                     <p className="text-[#767676] text-sm">
-                      You're all caught up! There are no notifications or alerts
-                      at the moment.
+                      {
+                        "You're all caught up! There are no notifications or alerts at the moment."
+                      }
                     </p>
                   </div>
                 </td>

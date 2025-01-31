@@ -289,8 +289,8 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
       {/* Password Checklist */}
       <div className="flex flex-col gap-2 text-sm text-gray-600">
         <p className="font-medium">Password must include:</p>
-        <ul className="list-none">
-          <li>
+        <ul className="list-none flex flex-wrap">
+          <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"
               checked={passwordChecklist.hasUpperCase}
@@ -298,7 +298,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
             />{" "}
             Uppercase letter
           </li>
-          <li>
+          <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"
               checked={passwordChecklist.hasLowerCase}
@@ -306,7 +306,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
             />{" "}
             Lowercase letter
           </li>
-          <li>
+          <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"
               checked={passwordChecklist.hasNumber}
@@ -314,7 +314,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
             />{" "}
             Number
           </li>
-          <li>
+          <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"
               checked={passwordChecklist.hasSpecialChar}
@@ -322,7 +322,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
             />{" "}
             Special character
           </li>
-          <li>
+          <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"
               checked={passwordChecklist.hasMinLength}

@@ -103,6 +103,13 @@ const MessagesSentChart = () => {
         ],
         datasets: [
           {
+            label: "SMS",
+            backgroundColor: "#383268",
+            data: [200, 250, 150, 180, 200, 220, 210, 230, 220, 240, 260, 210],
+            stack: "Stack 0",
+          },
+
+          {
             label: "WhatsApp",
             backgroundColor: "#9A2444",
             data: [600, 800, 500, 600, 650, 750, 700, 720, 710, 780, 820, 650],
@@ -113,12 +120,7 @@ const MessagesSentChart = () => {
             backgroundColor: "#CB1E33",
             data: [300, 400, 250, 300, 330, 350, 340, 360, 370, 390, 410, 320],
             stack: "Stack 0",
-          },
-          {
-            label: "SMS",
-            backgroundColor: "#383268",
-            data: [200, 250, 150, 180, 200, 220, 210, 230, 220, 240, 260, 210],
-            stack: "Stack 0",
+            borderRadius: { topLeft: 10, topRight: 10 },
           },
         ],
       };
@@ -128,22 +130,17 @@ const MessagesSentChart = () => {
     plugins: {
       legend: {
         position: "top",
-        align: "end",
+        align: "end", // Align legends to the left (optional)
         labels: {
-          usePointStyle: true,
-          pointStyle: "circle",
-          generateLabels: (chart) => {
-            const { datasets } = chart.data;
-            return datasets.map((dataset) => ({
-              text: dataset.label,
-              fillStyle: dataset.backgroundColor,
-              strokeStyle: dataset.backgroundColor,
-              lineWidth: 0,
-              pointStyle: "circle",
-              fontSize: 15, // Customize font size for legend text
-              width: 15, // Specify width for the circle
-            }));
+          usePointStyle: true, // Use circular dots instead of rectangles
+          pointStyle: "circle", // Ensure the shape is a circle
+          font: {
+            size: 13,
           },
+          padding: 20, // Add space between legend items
+          boxWidth: 8, // Adjust the width of the legend dot
+          boxHeight: 8,
+          color: "#344054",
         },
       },
     },
@@ -171,13 +168,24 @@ const MessagesSentChart = () => {
               <button
                 key={filter}
                 onClick={() => handleFilterChange(filter)}
-                className={`px-[16px] py-[10px] border border-[#D0D5DD] text-[14px] text-[#767676] flex ${
-                  selectedFilter === filter
-                    ? "bg-[#F9FAFB] text-[#1D2939]"
-                    : ""
+                className={`px-[16px] py-[10px] border relative border-[#D0D5DD] text-[14px] text-[#767676] flex ${
+                  selectedFilter === filter ? "bg-[#F9FAFB] text-[#1D2939]" : ""
                 }`}
               >
                 {filter}
+
+                {
+                  filter === "+ Custom" ? <><div className="absolute bottom-[-80px] z-[10]">
+                  {showCalendar && (
+                    <Calendar
+                      onChange={handleDateChange}
+                      tileDisabled={disableFutureDates}
+                      onClickDay={() => setShowCalendar(false)} // Close on day click
+                    />
+                  )}
+                </div></>
+                :<></>
+                }
               </button>
             )
           )}
@@ -187,13 +195,6 @@ const MessagesSentChart = () => {
           className="py-[10px] px-[16px] text-[#344054] rounded-[8px] border border-[#D0D5DD] hover:bg-[#eeeff0] text-[13px]"
         />
       </div>
-      {showCalendar && (
-        <Calendar
-          onChange={handleDateChange}
-          tileDisabled={disableFutureDates}
-          onClickDay={() => setShowCalendar(false)} // Close on day click
-        />
-      )}
     </div>
   );
 };

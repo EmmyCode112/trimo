@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const Button = ({ 
-  label, 
-  onClick, 
-  type = 'button', 
-  className, 
-  disabled = false, 
-  icon 
+const Button = ({
+  label,
+  onClick,
+  type = "button",
+  className,
+  disabled = false,
+  icon,
 }) => {
   return (
     <button
       type={type}
-      className={`px-[19px] py-[10px] border border-[#D0D5DD] text-[16px] font-[500] rounded-[52px] transition disabled:bg-[#EBEBF0] disabled:text-[#383268] disabled:cursor-not-allowed ${className}`}
+      className={`px-[19px] py-[10px] border border-[#D0D5DD] font-[500] rounded-[52px] transition disabled:bg-[#EBEBF0] disabled:text-[#383268] disabled:cursor-not-allowed ${className}`}
       onClick={onClick}
       disabled={disabled}
     >
@@ -35,7 +35,7 @@ Button.propTypes = {
 // Default props
 Button.defaultProps = {
   onClick: () => {},
-  className: '',
+  className: "",
   disabled: false,
   icon: null,
 };

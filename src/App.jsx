@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import "./App.css";
 
@@ -19,6 +19,7 @@ import PasswordReset from "./auth/forgottenPassword/PasswordReset";
 import Campaigns from "./pages/Campaigns/Campaigns";
 import Analytics from "./pages/Analytics/Analytics";
 import Setting from "./pages/Settings/Setting";
+import Wallet from "./pages/Wallet/Wallet";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
@@ -32,6 +33,31 @@ const App = () => {
     Cookies.remove("authToken"); // Remove auth token
     setIsAuthenticated(false); // Update authentication state
   };
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1030);
+
+  const toggleSidebar = () => {
+    if (window.innerWidth < 1030) {
+      setIsSidebarOpen((prev) => !prev);
+    }
+  };
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1030) {
+        setIsSidebarOpen(true); // Show sidebar on larger screens
+      } else {
+        setIsSidebarOpen(false); // Hide sidebar on smaller screens
+      }
+    };
+  
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
+  
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   return (
     <Router>
@@ -58,9 +84,9 @@ const App = () => {
             path="/*"
             element={
               <div className="h-[100vh] overflow-hidden flex">
-                <Sidebar />
+                <Sidebar isSidebarOpen={isSidebarOpen} />
                 <div className="flex-1 overflow-y-scroll">
-                  <Navbar />
+                  <Navbar toggleSidebar={toggleSidebar} />
                   <Routes>
                     <Route
                       path="/"
@@ -69,6 +95,7 @@ const App = () => {
                     <Route path="/campaigns" element={<Campaigns />} />
                     <Route path="/analytics" element={<Analytics />} />
                     <Route path="/settings" element={<Setting />} />
+                    <Route path="/wallet" element={<Wallet />} />
                     {/* Redirect unknown routes to dashboard */}
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
