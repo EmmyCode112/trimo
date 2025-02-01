@@ -289,7 +289,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
       {/* Password Checklist */}
       <div className="flex flex-col gap-2 text-sm text-gray-600">
         <p className="font-medium">Password must include:</p>
-        <ul className="list-none flex flex-wrap">
+        <ul className="list-none flex flex-wrap gap-2">
           <li className="flex py-1 px-[10px] rounded-[6px] gap-1 border cursor-pointer items-center border-[#D0D5DD]">
             <input
               type="checkbox"

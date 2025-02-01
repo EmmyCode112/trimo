@@ -21,11 +21,11 @@ import Wallet from "./pages/Wallet/Wallet";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "@/redux/slice/authSlice";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!Cookies.get("authToken")
-  );
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Handle sidebar visibility based on screen size
@@ -44,9 +44,10 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    Cookies.remove("authToken");
-    setIsAuthenticated(false);
+    dispatch(logout());
   };
 
   const toggleSidebar = () => {
@@ -61,11 +62,11 @@ const App = () => {
           <>
             <Route
               path="/sign-in"
-              element={<Signin setIsAuthenticated={setIsAuthenticated} />}
+              element={<Signin  />}
             />
             <Route
               path="/signup"
-              element={<Signup setIsAuthenticated={setIsAuthenticated} />}
+              element={<Signup />}
             />
             <Route path="/reset-password" element={<PasswordReset />} />
             <Route path="/account-setup" element={<SetUp />} />
