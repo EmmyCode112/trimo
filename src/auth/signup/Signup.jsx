@@ -37,7 +37,7 @@ const Signup = () => {
             </div>
 
             <div className="w-full h-full flex items-center justify-center">
-              <div className="w-[43%] mx-auto auth-right-container mt-[100px]">
+              <div className="w-[43%] mx-auto auth-right-container mt-[100px] max-sm:mb-[130px]">
                 <div className="flex flex-col gap-8px mb-[12px] max-sm:mb-[16px]">
                   <h4 className="font-[600] text-[28px] tracking-[-2px]">
                     Sign up to Get Started

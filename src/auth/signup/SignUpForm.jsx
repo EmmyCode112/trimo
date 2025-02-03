@@ -9,6 +9,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
   const [workPhone, setWorkPhone] = useState("");
   const [fullName, setFullName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [termsChecked, setTermsChecked] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -79,6 +80,7 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
       fullName &&
       workPhone &&
       confirmPassword &&
+      termsChecked &&
       validateEmail(email) &&
       validatePassword(password) &&
       validateFullName(fullName) &&
@@ -279,10 +281,15 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
 
       {/* Terms and Conditions */}
       <div className="flex gap-2">
-        <input type="checkbox" id="terms" />
-        <label htmlFor="terms" className="text-sm cursor-pointer">
+        <input
+          type="checkbox"
+          id="terms"
+          checked={termsChecked}
+          onChange={(e) => setTermsChecked(e.target.checked)}
+        />
+        <label htmlFor="terms" className="text-sm cursor-pointer ">
           I agree to the triimo{" "}
-          <span className="text-blue-500">Terms & Conditions</span>
+          <span className="text-[#4285F4]">Terms & Conditions</span>
         </label>
       </div>
 
