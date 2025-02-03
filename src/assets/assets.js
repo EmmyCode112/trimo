@@ -11,6 +11,10 @@ import successIcon from "./Icons/successImage.png";
 import houseIcon from "./Icons/company-icon.png";
 import welcomePic from "./Icons/woman-pic.png";
 import arrowRight from "./Icons/arrow-right.png";
+import contacts2Users from "./Icons/profile-2user.png"
+import sortIcon from "./Icons/sort.png"
+import folderIcon from "./Icons/Folder.png"
+import filterIcon from "./Icons/filter.png"
 
 import TriimoIcon from "./Icons/trimo-logo.png";
 import homeIcon from "./Icons/home-2.png";
@@ -76,4 +80,8 @@ export const Icons = {
   warningIcon,
   emptyState,
   croseIcon,
+  contacts2Users ,
+  sortIcon,
+  filterIcon,
+  folderIcon,
 };

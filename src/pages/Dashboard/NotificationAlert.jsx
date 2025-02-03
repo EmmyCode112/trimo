@@ -77,7 +77,7 @@ const NotificationAlert = () => {
                       {notification.type}
                     </p>
                   </td>
-                  <td className="flex items-center gap-[10px]">
+                  <td className="flex items-center gap-[10px] notification-message">
                     <img
                       src={notification.icon}
                       alt="icon"
@@ -97,7 +97,7 @@ const NotificationAlert = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={3} className="text-center py-8">
+                <td colSpan={3} className="text-center py-[70px]">
                   <div className="flex flex-col items-center">
                     <img
                       src={Icons.emptyState}
