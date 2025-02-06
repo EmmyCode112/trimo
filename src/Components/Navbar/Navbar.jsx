@@ -31,6 +31,7 @@ const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
     "/settings": [SideBarIcons.homeIconActive, "Settings"],
     "/wallet": [SideBarIcons.homeIconActive, "Wallet"],
     "/notifications": [SideBarIcons.homeIconActive, "Notifications"],
+    "/groups": [SideBarIcons.homeIconActive, "Groups"],
 
   };
   const breadcrumb = routesMap[location.pathname] || [

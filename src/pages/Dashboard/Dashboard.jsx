@@ -35,6 +35,7 @@ const Dashboard = ({handleLogout}) => {
 <div onClick={handleLogout} className="cursor-pointer text-[#EBEBF0] py-2 px-6">
   <p>Logout</p>
 </div>
+
       <div className="px-[31px] py-[32px]">
         <div className="flex justify-between align-center flex-wrap ga-[20px]">
           <header>

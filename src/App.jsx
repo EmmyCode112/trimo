@@ -20,6 +20,7 @@ import Analytics from "./pages/Analytics/Analytics";
 import Setting from "./pages/Settings/Setting";
 import Wallet from "./pages/Wallet/Wallet";
 import Notification from "./pages/Notification/Notification";
+import Groups from "./pages/Groups/Groups";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
@@ -116,6 +117,7 @@ const App = () => {
                     <Route path="/analytics" element={<Analytics />} />
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/wallet" element={<Wallet />} />
+                    <Route path="/groups" element={<Groups />} />
                     <Route path="/notifications" element={<Notification />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
