@@ -7,10 +7,15 @@ const GroupFolder = ({
   toggleSelection,
   selectedFolders,
   groupId,
+  openFolderDetails,
+  folder
 }) => {
   const isSelected = selectedFolders.includes(groupId);
   return (
-    <div className="flex folder-con flex-col gap-2 w-full sm:w-1/2 lg:w-1/4 cursor-pointer">
+    <div
+      className="flex folder-con flex-col gap-2 w-full sm:w-1/2 lg:w-1/4 cursor-pointer"
+      onClick={()=>openFolderDetails(folder)}
+    >
       <div className="relative folder-img-con w-full h-auto sm:w-[184px] sm:h-[115px]">
         <img
           src={Icons.FolderIcon}
@@ -19,17 +24,18 @@ const GroupFolder = ({
         />
         <img
           src={isSelected ? Icons.checkboxActive : Icons.checkbox}
-          onClick={() => toggleSelection(groupId)}
+          onClick={(e) => {
+            e.stopPropagation(); // ✅ Prevents triggering folder click
+            toggleSelection(groupId);
+          }}
           alt="checkbox"
           className="absolute top-[12px] left-[10px] cursor-pointer"
         />
       </div>
-      <p className="text-[#484848] text-[16px] font-normal ">
-        {groupName}
-      </p>
+      <p className="text-[#484848] text-[16px] font-normal ">{groupName}</p>
       <div className="flex items-center gap-x-1 mt-1">
         <img src={Icons.contacts2Users} alt="users" />
-        <p className="text-[#767676] text-sm font-normal">{totalContact}</p>
+        <p className="text-[#767676] text-sm font-normal">{folder.contacts.length}</p>
       </div>
     </div>
   );

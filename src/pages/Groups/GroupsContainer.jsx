@@ -13,6 +13,7 @@ const GroupsContainer = ({
   toggleSelection,
   selectedFolders,
   setOpenDeleteModal,
+  openFolderDetails,
 }) => {
   return (
     <div className="w-full rounded-[15px] h-[605px] overflow-y-scroll hide-scrollBar pb-[60px] flex flex-col gap-[20px] shadow-md border border-[#EAECF0]">
@@ -37,9 +38,11 @@ const GroupsContainer = ({
             <GroupFolder
               groupId={group.id}
               groupName={group.name}
-              totalContact={group.contacts}
+              // totalContact={group.contacts}
               toggleSelection={toggleSelection}
               selectedFolders={selectedFolders}
+              openFolderDetails={openFolderDetails}
+              folder={group}
             />
           </div>
         ))}

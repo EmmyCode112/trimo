@@ -3,12 +3,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "../../assets/assets";
 import Button from "../../Components/buttons/transparentButton";
 
-const DeleteGroupModal = ({
-  openDeleteModal,
-  onClose,
-  onDelete,
-  selectedFolders
-}) => {
+const DeleteModal = ({ isOpenDeleteModal, onClose, onDelete }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
@@ -21,14 +16,14 @@ const DeleteGroupModal = ({
       }
     };
 
-    if (openDeleteModal) {
+    if (isOpenDeleteModal) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openDeleteModal, onClose]);
+  }, [isOpenDeleteModal, onClose]);
 
   // Handle dragging down on mobile to close
   const handleDragStart = (e) => {
@@ -56,12 +51,7 @@ const DeleteGroupModal = ({
     dragRef.current = null;
   };
 
-  if (!openDeleteModal) return null;
-
-  const handleDelete = () => {
-    onDelete();
-    onClose();
-  };
+  if (!isOpenDeleteModal) return null;
 
   return (
     <div className="fixed flex items-center justify-center max-md:items-end inset-0 z-50 bg-[#C7C7C74D] backdrop-blur-[8.1px]">
@@ -99,10 +89,10 @@ const DeleteGroupModal = ({
             />
             <div>
               <h2 className="mb-1 text-[#1A1A1A] text-[20px] font-medium">
-                {`Delete ${selectedFolders.length} ${selectedFolders.length > 1 ? "Groups" : "Group" }`}
+                Delete Contact
               </h2>
               <p className="text-[#767676] font-normal text-[15px] w-[80%] max-sm:w-full">
-                Are you sure you want to delete this {`${selectedFolders.length > 1 ? "Groups" : "Group" }`}? This action cannot
+                Are you sure you want to delete this contact? This action cannot
                 be undone.
               </p>
             </div>
@@ -115,7 +105,7 @@ const DeleteGroupModal = ({
             />
 
             <Button
-              onClick={handleDelete}
+              onClick={onDelete}
               label="Delete Contact"
               className="rounded-[8px] border bg-[#CB1E33] text-white"
             />
@@ -126,4 +116,4 @@ const DeleteGroupModal = ({
   );
 };
 
-export default DeleteGroupModal;
+export default DeleteModal;

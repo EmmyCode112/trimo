@@ -3,11 +3,11 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "../../assets/assets";
 import Button from "../../Components/buttons/transparentButton";
 
-const DeleteGroupModal = ({
+const DeleteMultipleModal = ({
   openDeleteModal,
   onClose,
   onDelete,
-  selectedFolders
+  selectedContacts
 }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -69,7 +69,7 @@ const DeleteGroupModal = ({
         ref={modalRef}
         className={` bg-white ${
           isMobile
-            ? "inset-x-0 bottom-0 rounded-t-[40px] p-3"
+            ? "inset-x-0 bottom-0 rounded-t-[40px] p-3 w-full"
             : " w-[517px] rounded-[40px] p-[22px]"
         }`}
         onTouchStart={handleDragStart}
@@ -99,10 +99,10 @@ const DeleteGroupModal = ({
             />
             <div>
               <h2 className="mb-1 text-[#1A1A1A] text-[20px] font-medium">
-                {`Delete ${selectedFolders.length} ${selectedFolders.length > 1 ? "Groups" : "Group" }`}
+                {`Delete ${selectedContacts.length} ${selectedContacts.length > 1 ? "Contacts" : "Contact" }`}
               </h2>
               <p className="text-[#767676] font-normal text-[15px] w-[80%] max-sm:w-full">
-                Are you sure you want to delete this {`${selectedFolders.length > 1 ? "Groups" : "Group" }`}? This action cannot
+                Are you sure you want to delete this {`${selectedContacts.length > 1 ? "Contacts" : "Contact" }`}? This action cannot
                 be undone.
               </p>
             </div>
@@ -126,4 +126,4 @@ const DeleteGroupModal = ({
   );
 };
 
-export default DeleteGroupModal;
+export default DeleteMultipleModal;

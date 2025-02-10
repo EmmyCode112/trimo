@@ -5,42 +5,141 @@ import EmptyState from "./EmptyState";
 import GroupsContainer from "./GroupsContainer";
 import CreateGroupModal from "./CreateGroupModal";
 import DeleteGroupModal from "./DeleteGroupModal";
+import FolderDetailModal from "./FolderDetailModal";
 import "./Groups.css";
 
 const Group = () => {
   const [groups, setGroups] = useState([
-    { id: 1, name: "Team A", contacts: 10 },
-    { id: 2, name: "Newsletter Subscribers", contacts: 50 },
-    { id: 3, name: "Newsletter Subscribers", contacts: 60 },
-    { id: 4, name: "Together", contacts: 70 },
-    { id: 5, name: "Newsletter Subscribers", contacts: 55 },
-    { id: 6, name: "Team A", contacts: 50 },
+    {
+      id: 1,
+      name: "Team A",
+      contacts: [
+        {
+          id: 10,
+          firstName: "Margaret",
+          lastName: "Alanira",
+          email: "abujifinast@icloud.com",
+          phone: "+234 813 201 1725",
+        },
+        {
+          id: 9,
+          firstName: "Sarah",
+          lastName: "Okano",
+          email: "penelope@gmail.com",
+          phone: "+234 709 657 6467",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Newsletter Subscribers",
+      contacts: [
+        {
+          id: 8,
+          firstName: "Rebecca",
+          lastName: "Nwachukwu",
+          email: "akwabtom@gmail.com",
+          phone: "+234 703 501 4280",
+        },
+        {
+          id: 7,
+          firstName: "Sarah",
+          lastName: "Okano",
+          email: "penelope@gmail.com",
+          phone: "+234 709 657 6467",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Newsletter Subscribers",
+      contacts: [
+        {
+          id: 6,
+          firstName: "Naomi",
+          lastName: "Aganaba",
+          email: "tanoribeau@gmail.com",
+          phone: "+234 704 442 5317",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Together",
+      contacts: [
+        {
+          id: 4,
+          firstName: "Naomi",
+          lastName: "Aganaba",
+          email: "tanoribeau@gmail.com",
+          phone: "+234 704 442 5317",
+        },
+        {
+          id: 3,
+          firstName: "promise",
+          lastName: "Eke",
+          email: "andrew@triimo.com",
+          phone: "+234 792 241 5655",
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: "Newsletter Subscribers",
+      contacts: [
+        {
+          id: 2,
+          firstName: "Timo",
+          lastName: "Eke",
+          email: "andrew@triimo.com",
+          phone: "+234 792 241 5655",
+        },
+      ],
+    },
+    {
+      id: 6,
+      name: "Team A",
+      contacts: [
+        {
+          id: 1,
+          firstName: "Timothy",
+          lastName: "Eke",
+          email: "andrew@triimo.com",
+          phone: "+234 792 241 5655",
+        },
+      ],
+    },
   ]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [duplicateError, setDuplicateError] = useState(false);
+  const [selectedFolders, setSelectedFolders] = useState([]);
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  const [openCreateFormModal, setOpenCreateFormModal] = useState(false);
+
+
+
   const handleCreateGroup = (groupName) => {
     const isDuplicate = groups.some(
       (group) => group.name.toLowerCase() === groupName.toLowerCase()
     );
 
     if (isDuplicate) {
-      setDuplicateError(true); // Show duplicate error message
+      setDuplicateError(true);
       return;
     }
 
     if (groupName.trim()) {
       setGroups([
         ...groups,
-        { id: groups.length + 1, name: groupName, contacts: 0 },
+        { id: groups.length + 1, name: groupName, contacts: [] },
       ]);
     }
 
-    setDuplicateError(false); // Reset error if the name is unique
+    setDuplicateError(false);
     setIsModalOpen(false);
   };
-
-  const [selectedFolders, setSelectedFolders] = useState([]);
   const toggleSelection = (id) => {
     setSelectedFolders((prev) =>
       prev.includes(id)
@@ -52,6 +151,10 @@ const Group = () => {
   const handleDelete = () => {
     setGroups(groups.filter((group) => !selectedFolders.includes(group.id)));
     setSelectedFolders([]);
+  };
+
+  const openFolderDetails = (folder) => {
+    setSelectedFolder(folder);
   };
 
   return (
@@ -94,19 +197,16 @@ const Group = () => {
       </div>
 
       <div>
-        {groups.length === 0 ? (
-          <EmptyState data={groups} setIsModalOpen={setIsModalOpen} />
-        ) : (
           <GroupsContainer
             data={groups}
             toggleSelection={toggleSelection}
             selectedFolders={selectedFolders}
             setOpenDeleteModal={setOpenDeleteModal}
+            openFolderDetails={openFolderDetails}
           />
-        )}
+
       </div>
 
-      {/* Create Group Modal */}
       {isModalOpen && (
         <CreateGroupModal
           data={groups}
@@ -116,16 +216,27 @@ const Group = () => {
         />
       )}
 
-      {/* delete Group Modal */}
-
       {openDeleteModal && (
         <DeleteGroupModal
           onDelete={handleDelete}
           onClose={() => setOpenDeleteModal(false)}
           setOpenDeleteModal={setOpenDeleteModal}
           openDeleteModal={openDeleteModal}
+          selectedFolders={selectedFolders}
         />
       )}
+
+      {selectedFolder && (
+        <FolderDetailModal
+          folder={selectedFolder}
+          open={Boolean(selectedFolder)}
+          onClose={() => setSelectedFolder(null)}
+          setOpenCreateFormModal={setOpenCreateFormModal}
+          openCreateFormModal={openCreateFormModal}
+          setGroups={setGroups}
+        />
+      )}
+      
     </div>
   );
 };
