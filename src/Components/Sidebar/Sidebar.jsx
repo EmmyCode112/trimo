@@ -6,7 +6,7 @@ import "./Sidebar.css";
 
 const Sidebar = ({ isSidebarOpen }) => {
   const links = [
-    { label: "Home", Icon: SideBarIcons.homeIcon, route: "/dashboard" },
+    { label: "Home", Icon: SideBarIcons.homeIcon, route: "/" },
     { label: "Campaigns", Icon: SideBarIcons.campaignIcon, route: "/campaigns" },
     { label: "Contacts", Icon: SideBarIcons.contactIcon, route: "/contacts" },
     { label: "Templates", Icon: SideBarIcons.templateIcon },
@@ -32,7 +32,7 @@ const Sidebar = ({ isSidebarOpen }) => {
   }, [location.pathname]);
 
   return (
-    <div className="bg-[#605B86] h-full flex flex-col justify-between w-[263px]">
+    <div className="bg-[#383268] h-full flex flex-col justify-between w-[263px]">
       <div>
         <div className="pt-[32px] pb-[24px] pl-[24px]">
           <img src={SideBarIcons.TriimoIcon} alt="Triimo Logo" />

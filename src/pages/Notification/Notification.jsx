@@ -47,10 +47,13 @@ const Notification = () => {
         <container className="dashboard-table-container">
           <div className="w-full rounded-[15px] py-[20px] px-[20px] flex flex-col gap-[22px] shadow-md border">
             <div>
-            <h2 className="text-[#3F3E3E] text-[18px] font-medium mb-[5px]">
-            All  Notifications
-            </h2>
-            <p className="text-[#767676] text-[14px] font-normal">View all saved contacts with their details and associated groups at a glance.</p>
+              <h2 className="text-[#3F3E3E] text-[18px] font-medium mb-[5px]">
+                All Notifications
+              </h2>
+              <p className="text-[#767676] text-[14px] font-normal">
+                View all saved contacts with their details and associated groups
+                at a glance.
+              </p>
             </div>
 
             <div className="overflow-x-scroll w-full scrollbar-hide">

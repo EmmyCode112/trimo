@@ -29,7 +29,7 @@ const PopUp = () => {
         <div >
           <Button
             label="Go to Dashboard"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/sign-in")}
             className="bg-[#383268] hover:bg-[#41397c] text-white rounded-[8px] w-full py-[12px] px-[20px] "
           />
         </div>

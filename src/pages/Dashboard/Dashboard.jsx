@@ -35,9 +35,8 @@ const Dashboard = ({handleLogout}) => {
 <div onClick={handleLogout} className="cursor-pointer text-[#EBEBF0] py-2 px-6">
   <p>Logout</p>
 </div>
-
       <div className="px-[31px] py-[32px]">
-        <div className="flex justify-between align-center flex-wrap ga-[20px]">
+        <div className="flex justify-between align-center flex-wrap gap-[20px]">
           <header>
             <h1 className="text-[#1A1A1A] text-[24px] font-medium">
               Welcome to Your Triimo Dashboard
