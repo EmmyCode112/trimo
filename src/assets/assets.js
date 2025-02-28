@@ -62,6 +62,14 @@ import groupIcon from "./Icons/group.png"
 import OtpIcon from "./Icons/OtpIcon.png"
 import whatsAppIcon from "./Icons/whatsAppIcon.png"
 import calenderIcon from "./Icons/calendar.png"
+import clockIcon from "./Icons/clock.png"
+import IphoneTopNavigation from "./Icons/TopNavigation.png"
+import boldIcon from "./Icons/text-bold.png"
+import italicIcon from "./Icons/text-italic.png"
+import underlinedIcon from "./Icons/text-underline.png"
+import linkIcon from "./Icons/link-04.png"
+import pasteIinkIcon from "./Icons/link-2.png"
+import veriableIcon from "./Icons/3rd-bracket.png"
 
 export const SideBarIcons = {
   TriimoIcon,
@@ -127,5 +135,13 @@ arrowDown,
 groupIcon,
 whatsAppIcon,
 OtpIcon,
-calenderIcon
+calenderIcon,
+clockIcon,
+IphoneTopNavigation,
+boldIcon,
+italicIcon,
+underlinedIcon,
+linkIcon,
+veriableIcon,
+pasteIinkIcon
 };

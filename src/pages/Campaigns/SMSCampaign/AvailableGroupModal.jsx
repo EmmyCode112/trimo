@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Icons } from "../../assets/assets";
-import { useGroups } from "../../redux/GroupProvider/UseGroup";
+import { Icons } from "@/assets/assets";
+import { useGroups } from "../../../redux/GroupProvider/UseGroup";
 import GroupFolder from "./GroupFolder";
-import Button from "../../Components/buttons/transparentButton";
-import "./Contacts.css";
+import Button from "@/Components/buttons/transparentButton";
+// import "./Contacts.css";
 import CreateGroupModal from "./CreateGroupModal";
 
 const AvailableGroupModal = ({
   openAvailableGroups,
   onClose,
-  moveContactsToGroup,
 }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -70,6 +69,7 @@ const AvailableGroupModal = ({
 
   const { groups, setGroups } = useGroups();
 
+  console.log("groups", groups);
 
   if (!openAvailableGroups) return null;
 
@@ -146,7 +146,6 @@ const AvailableGroupModal = ({
                       folder={items} // Pass the current group instead of the whole array
                       groupId={items.id}
                       groupName={items.name}
-                      moveContactsToGroup={moveContactsToGroup}
                     />
                   </div>
                 ))}
