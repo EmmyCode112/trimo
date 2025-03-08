@@ -74,7 +74,8 @@ const UsersPage = ({ customers, message, setMessage }) => {
 
   const handleInsertLink = () => {
     if (linkText && linkUrl) {
-      const linkHtml = `<a href="${linkUrl}" target="_blank" style="color: #383268;">${linkText}</a>`;
+      const linkHtml = `<a href="${linkUrl}" target="_blank" style="color: #4A74FD !important;">${linkText}</a>`;
+
       insertAtCursor(linkHtml);
       setShowLinkPopup(false);
       setLinkText("");

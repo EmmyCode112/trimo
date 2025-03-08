@@ -3,11 +3,16 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "@/assets/assets";
 import Button from "@/Components/buttons/transparentButton";
 
-const CreateGroupModal = ({ isOpen, onClose, onCreate, data }) => {
+const CreateGroupModal = ({ isOpen, onClose, onCreate, data, setToast, toast }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
   const [groupName, setGroupName] = useState("");
+
+  // Function to show toast
+  const showToast = (title, message, type) => {
+    setToast({ show: true, title, message, type });
+  };
 
   // Close modal when clicking outside
   useEffect(() => {
@@ -62,13 +67,17 @@ const CreateGroupModal = ({ isOpen, onClose, onCreate, data }) => {
     );
 
     if (isDuplicate) {
-      setDuplicateError(true);
+      showToast("Duplicate Error", "This group name is already in use.please chose a unique name.", "error");
       return;
+    } else {
+      showToast("Group Created", "Your group was created successfully!", "success");
     }
+
 
     onCreate(groupName);
     setGroupName("");
     setDuplicateError(false);
+    onClose()
   };
 
   const handleKeyDown = (e) => {
@@ -117,26 +126,7 @@ const CreateGroupModal = ({ isOpen, onClose, onCreate, data }) => {
           className="border p-2 w-full rounded outline-none"
           placeholder="Enter group name"
         />
-        {duplicateError && (
-          <div className="flex bg-[#FBF1E6] my-[30px] items-start border border-[#E29133] gap-3 p-4 rounded-[8px]">
-            <img src={Icons.errorWarningIcon} alt="error" />
-            <div>
-              <p className="text-[#DB7500] text-[14px] font-medium">
-                Duplicate Entry
-              </p>
-              <p className="text-[#C76A00] text-[14px] font-normal">
-                This group is already in your list. Avoid duplicates to
-                streamline delivery.
-              </p>
-            </div>
-            <img
-              src={Icons.closeXIcon}
-              alt=""
-              className="cursor-pointer"
-              onClick={() => setDuplicateError(false)}
-            />
-          </div>
-        )}
+
         <div className="flex justify-end mt-4 gap-2">
           <Button
             label="Cancel"
@@ -146,11 +136,13 @@ const CreateGroupModal = ({ isOpen, onClose, onCreate, data }) => {
           <Button
             onClick={handleCreate}
             className="px-4 py-2 bg-[#383268] text-white rounded"
-            disabled={duplicateError || groupName.trim() === ""}
+            disabled={ groupName.trim() === ""}
             label="Create"
           />
         </div>
       </div>
+
+
     </div>
   );
 };

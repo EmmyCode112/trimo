@@ -10,6 +10,8 @@ import { useModal } from "../../../redux/UseCampaignModal";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../Components/buttons/transparentButton";
 import { Icons } from "../../../assets/assets";
+import Toast from "@/Components/Alerts/Toast"
+
 
 const SmsCampaign = () => {
   const { recipients, setRecipients } = useRecipients();
@@ -18,6 +20,8 @@ const SmsCampaign = () => {
   const [selectedRecipientId, setSelectedRecipientId] = useState(null);
   const [importModal, setImportModal] = useState(false);
   const [importFromGroup, setImportFromGroup] = useState(false);
+  const [toast, setToast] = useState({ show: false, title: "", message: "", type: "" });
+
   const handleClickCsv = () => {
     setImportModal(true);
   };
@@ -156,6 +160,18 @@ const SmsCampaign = () => {
         <AvailableGroupModal
           openAvailableGroups={importFromGroup}
           onClose={() => setImportFromGroup(false)}
+        toast={toast}
+        setToast={setToast}
+        />
+      )}
+
+      
+{toast.show && (
+        <Toast
+          title={toast.title}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ show: false })}
         />
       )}
     </div>
