@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Icons } from "../../../assets/assets";
-import Button from "../../../Components/buttons/transparentButton";
+import { Icons } from "@/assets/assets";
+import Button from "@/Components/buttons/transparentButton";
 import "./Calender.css";
-import { useModal } from "../../../redux/UseCampaignModal";
+import { useModal } from "@/redux/UseCampaignModal";
 import { useNavigate } from "react-router-dom";
 
-const CreateCampaignFormModal = ({ onClose, onOpen }) => {
+const CreateWhatsAppCampaignFormModal = ({ onClose, onOpen }) => {
   const modalRef = useRef(null);
   const calendarRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -104,24 +104,10 @@ const CreateCampaignFormModal = ({ onClose, onOpen }) => {
 
   if (!onOpen) return null;
 
-  //   const formatCampaignName = (campaignName) => {
-  //     return campaignName
-  //       .toLowerCase()
-  //       .replace(/[^a-z0-9.\-_ ]/g, "") // Allow only letters, numbers, ., -, _, and spaces
-  //       .replace(/\s+/g, "-"); // Replace spaces with dashes
-  //   };
-
-  // const handleNext = () => {
-  //   if (campaignName.trim()) {
-  //   //   const formattedName = formatCampaignName(campaignName);
-  //     navigate(`/campaigns/${campaignName}`);
-  //     onClose();
-  //   }
-  // };
   const handleNext = () => {
     if (campaignName.trim()) {
       //   const formattedName = formatCampaignName(campaignName);
-      navigate(`/campaigns/smsCampaign`);
+      navigate(`/campaigns/whatsApp-campaign`);
       onClose();
     }
   };
@@ -148,7 +134,7 @@ const CreateCampaignFormModal = ({ onClose, onOpen }) => {
         <div className="flex flex-col justify-between gap-3 h-full">
           <div>
             <h2 className="text-[#1A1A1A] text-[18px] font-medium">
-              Create Campaign
+              Create WhatsApp Campaign
             </h2>
             <p className="text-[#767676] text-[14px] font-normal max-w-[95%] md:w-full">
               Campaigns are dynamic, sending person-by-person as they meet
@@ -262,4 +248,4 @@ const CreateCampaignFormModal = ({ onClose, onOpen }) => {
   );
 };
 
-export default CreateCampaignFormModal;
+export default CreateWhatsAppCampaignFormModal;

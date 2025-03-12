@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Icons } from "../../../assets/assets";
-import Button from "../../../Components/buttons/transparentButton";
-import { useRecipients } from "../../../redux/UseRecipient";
+import { Icons } from "../../assets/assets";
+import Button from "../buttons/transparentButton";
+import { useRecipients } from "../../redux/UseRecipient";
 const CreateRecipientFormModal = ({ onClose, onOpen }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -59,10 +59,10 @@ const CreateRecipientFormModal = ({ onClose, onOpen }) => {
     phone: "",
   });
   const isFormValid =
-  !formData.firstName ||
-  !formData.lastName ||
-  !formData.email ||
-  !formData.phone;
+    !formData.firstName ||
+    !formData.lastName ||
+    !formData.email ||
+    !formData.phone;
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -70,7 +70,7 @@ const CreateRecipientFormModal = ({ onClose, onOpen }) => {
     if (isFormValid) return;
 
     const newRecipient = {
-      id: recipients.length + 1, 
+      id: recipients.length + 1,
       ...formData,
     };
 

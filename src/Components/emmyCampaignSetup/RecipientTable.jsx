@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useTable, usePagination } from "react-table";
-import { useRecipients } from "../../../redux/UseRecipient";
-import { Icons } from "../../../assets/assets";
-import Button from "../../../Components/buttons/transparentButton";
+import { useRecipients } from "../../redux/UseRecipient";
+import { Icons } from "../../assets/assets";
+import Button from "../buttons/transparentButton";
 
-const RecipientsTable = ({openFormModal, openDeleteModal}) => {
+const RecipientsTable = ({ openFormModal, openDeleteModal }) => {
   const { recipients, setRecipients } = useRecipients();
 
   const columns = React.useMemo(
@@ -17,7 +17,7 @@ const RecipientsTable = ({openFormModal, openDeleteModal}) => {
         Header: "",
         accessor: "id",
         Cell: ({ value }) => (
-          <button onClick={()=>openDeleteModal(value)}>
+          <button onClick={() => openDeleteModal(value)}>
             <img src={Icons.trashIcon} alt="Delete" />
           </button>
         ),
@@ -27,8 +27,6 @@ const RecipientsTable = ({openFormModal, openDeleteModal}) => {
   );
 
   const data = recipients;
-
-
 
   const {
     getTableProps,
@@ -42,7 +40,10 @@ const RecipientsTable = ({openFormModal, openDeleteModal}) => {
     canPreviousPage,
     pageOptions,
     state: { pageIndex },
-  } = useTable({ columns, data: recipients, initialState: { pageIndex: 0, pageSize: 6 }, }, usePagination);
+  } = useTable(
+    { columns, data: recipients, initialState: { pageIndex: 0, pageSize: 6 } },
+    usePagination
+  );
 
   if (data.length === 0) {
     return (

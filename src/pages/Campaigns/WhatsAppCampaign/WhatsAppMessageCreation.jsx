@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
-import Button from "../../../Components/buttons/transparentButton";
-import MessageEditor from "./MessageEditor";
-import SelectedRecipient from "./SelectedRecipient";
+import Button from "@/Components/buttons/transparentButton";
+import MessageEditor from "@/Components/emmyCampaignSetup/MessageEditor";
+import SelectedRecipient from "@/Components/emmyCampaignSetup/SelectedRecipient";
 import MessagePreview from "./MessagePreview";
-import { useRecipients } from "../../../redux/UseRecipient";
-import ScheduleCampaign from "../../../Components/emmyCampaignSetup/ScheduleCampaign";
-import CreationRecipientModal from "../../../Components/emmyCampaignSetup/CreationRecipientModal";
+import { useRecipients } from "@/redux/UseRecipient";
+import ScheduleCampaign from "./ScheduleCampaign";
+import CreationRecipientModal from "@/Components/emmyCampaignSetup/CreationRecipientModal";
 import { useNavigate } from "react-router-dom";
 
-const MessageCreation = () => {
+const WhatsAppMessageCreation = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const { recipients } = useRecipients();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({ header: "", description: "" });
   const [openFormModal, setOpenFormModal] = useState(false);
   const [schedule, setSchedule] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -25,12 +27,15 @@ const MessageCreation = () => {
     schedule === "sendNow" ||
     (schedule === "scheduleLater" && selectedDate && selectedTime);
 
+  const isScheduleEnabled =
+    message.header.trim() !== "" && message.description.trim() !== "";
+  console.log("parent component", imageSrc);
   return (
     <div className="px-[31px] py-[32px] flex flex-col gap-[22px]">
       <div className="flex justify-between items-center flex-wrap-reverse gap-[20px]">
         <header>
           <h1 className="text-[#1A1A1A] text-[24px] font-medium mb-[5px]">
-            Message Creation
+            What message do you want to send?
           </h1>
           <p className="text-[#767676] font-normal text-[15px]">
             Add broadcast name and template below
@@ -52,18 +57,29 @@ const MessageCreation = () => {
       <div className="flex items-start gap-[45px]">
         <div className="flex flex-col gap-y-[25px] md:w-2/3">
           <div>
-            <MessageEditor customer={recipients} setMessage={setMessage} />
+            <MessageEditor
+              customer={recipients}
+              setMessage={setMessage}
+              setImageSrc={setImageSrc}
+              setImageUrl={setImageUrl}
+              imageUrl={imageUrl}
+            />
           </div>
           <div>
             <SelectedRecipient openForm={() => setOpenFormModal(true)} />
           </div>
         </div>
         <div className="md:w-1/3">
-          <MessagePreview customer={recipients[0]} message={message} />
+          <MessagePreview
+            customer={recipients[0]}
+            message={message}
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+          />
         </div>
       </div>
       <div>
-        {message.length > 0 && (
+        {isScheduleEnabled && (
           <ScheduleCampaign
             setSchedule={setSchedule}
             schedule={schedule}
@@ -85,4 +101,4 @@ const MessageCreation = () => {
   );
 };
 
-export default MessageCreation;
+export default WhatsAppMessageCreation;

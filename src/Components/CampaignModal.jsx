@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Icons } from "../../../assets/assets";
-import Button from "../../../Components/buttons/transparentButton";
-import { useModal } from "../../../redux/UseCampaignModal";
+import { Icons } from "../assets/assets";
 
+import { useModal } from "../redux/UseCampaignModal";
 
 const CampaignModal = ({ onClose, onOpen }) => {
   const modalRef = useRef(null);
@@ -55,12 +54,16 @@ const CampaignModal = ({ onClose, onOpen }) => {
 
   if (!onOpen) return null;
 
-  const {openFormModal} = useModal();
+  const { openFormModal, openWhatsFormModal } = useModal();
 
-  const handleOpenSmsModal = ()=> {
+  const handleOpenSmsModal = () => {
     openFormModal();
     onClose();
-  }
+  };
+  const handleOpenWhatsAppModal = () => {
+    openWhatsFormModal();
+    onClose();
+  };
 
   return (
     <div className="fixed flex items-center justify-center max-md:items-end inset-0 z-50 bg-[#C7C7C74D] backdrop-blur-[8.1px]">
@@ -91,20 +94,29 @@ const CampaignModal = ({ onClose, onOpen }) => {
                 Pick a campaign type you would love to start with
               </p>
             </div>
-            <img src={Icons.crossIcon} alt="close" className="cursor-pointer" onClick={onClose} />
+            <img
+              src={Icons.crossIcon}
+              alt="close"
+              className="cursor-pointer"
+              onClick={onClose}
+            />
           </div>
           <div className=" bg-[#F1F1F1] rounded-[15px] p-1 mt-6">
             <div className="flex flex-col md:flex-row gap-[11px] ">
               {/* sms campaign */}
-              <div className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer" onClick={handleOpenSmsModal}>
+              <div
+                className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer"
+                onClick={handleOpenSmsModal}
+              >
                 <img src={Icons.contactFrameImport} alt="import contact" />
                 <div className="flex items-center justify-between gap-[20px]">
                   <div>
                     <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
-                    SMS Campaign
+                      SMS Campaign
                     </h2>
                     <p className="text-[#767676] text-[11px] font-normal">
-                    Send a quick, direct message with SMS. Perfect for concise updates and alerts.
+                      Send a quick, direct message with SMS. Perfect for concise
+                      updates and alerts.
                     </p>
                   </div>
                   <div className=" bg-[#FAFAFA] rounded-sm flex items-center justify-center p-[7px]">
@@ -141,7 +153,10 @@ const CampaignModal = ({ onClose, onOpen }) => {
             </div>
             <div className="flex flex-col md:flex-row gap-[11px] mt-[11px]">
               {/* whatsApp  campaign*/}
-              <div className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer">
+              <div
+                onClick={handleOpenWhatsAppModal}
+                className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer"
+              >
                 <img src={Icons.whatsAppIcon} alt="import contact" />
                 <div className="flex items-center justify-between gap-[20px]">
                   <div>
@@ -162,29 +177,29 @@ const CampaignModal = ({ onClose, onOpen }) => {
                   </div>
                 </div>
               </div>
-              
+
               {/* otp campaign */}
-              <div className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer" >
-              <img src={Icons.OtpIcon} alt="import contact" />
-              <div className="flex items-center justify-between gap-[20px]">
-                <div>
-                  <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
-                    OTP Campaign
-                  </h2>
-                  <p className="text-[#767676] text-[11px] font-normal">
-                    Send a quick, direct message with SMS. Perfect for concise
-                    updates and alerts.
-                  </p>
-                </div>
-                <div className=" bg-[#FAFAFA] rounded-sm flex items-center justify-center p-[7px]">
-                  <img
-                    src={Icons.arrowLeftPagin}
-                    alt=""
-                    className="w-[26px] "
-                  />
+              <div className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer">
+                <img src={Icons.OtpIcon} alt="import contact" />
+                <div className="flex items-center justify-between gap-[20px]">
+                  <div>
+                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
+                      OTP Campaign
+                    </h2>
+                    <p className="text-[#767676] text-[11px] font-normal">
+                      Send a quick, direct message with SMS. Perfect for concise
+                      updates and alerts.
+                    </p>
+                  </div>
+                  <div className=" bg-[#FAFAFA] rounded-sm flex items-center justify-center p-[7px]">
+                    <img
+                      src={Icons.arrowLeftPagin}
+                      alt=""
+                      className="w-[26px] "
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import CreateRecipientFormModal from "../../../Components/emmyCampaignSetup/CreateRecipientFormModal";
-import RecipientTable from "../../../Components/emmyCampaignSetup/RecipientTable";
+import CreateRecipientFormModal from "@/Components/emmyCampaignSetup/CreateRecipientFormModal";
+import RecipientTable from "@/Components/emmyCampaignSetup/RecipientTable";
 import { useRecipients } from "../../../redux/UseRecipient";
-import DeleteRecipientModal from "../../../Components/emmyCampaignSetup/DeleteRecipientModal";
-import ImportContact from "../../../Components/emmyCampaignSetup/ImportContact";
-import AvailableGroupModal from "../../../Components/emmyCampaignSetup/AvailableGroupModal";
+import DeleteRecipientModal from "@/Components/emmyCampaignSetup/DeleteRecipientModal";
+import ImportContact from "@/Components/emmyCampaignSetup/ImportContact";
+import AvailableGroupModal from "@/Components/emmyCampaignSetup/AvailableGroupModal";
 
 import { useModal } from "../../../redux/UseCampaignModal";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import Button from "../../../Components/buttons/transparentButton";
 import { Icons } from "../../../assets/assets";
 import Toast from "@/Components/Alerts/Toast";
 
-const SmsCampaign = () => {
+const WhatsAppCampaign = () => {
   const { recipients, setRecipients } = useRecipients();
   const [openFormModal, setOpenFormModal] = useState(false);
   const [openDeleteRecipient, setOpenDeleteRecipient] = useState(false);
@@ -64,7 +64,7 @@ const SmsCampaign = () => {
   // Handle Next Button Click
   const handleNext = () => {
     if (!NextButtonDisabled) {
-      navigate("/campaigns/smsCampaign/create");
+      navigate("/campaigns/WhatsApp-campaign/create");
     }
   };
   useEffect(() => {
@@ -184,4 +184,4 @@ const SmsCampaign = () => {
   );
 };
 
-export default SmsCampaign;
+export default WhatsAppCampaign;

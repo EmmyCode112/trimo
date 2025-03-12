@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "@/assets/assets";
-import { useGroups } from "../../../redux/GroupProvider/UseGroup";
-import GroupFolder from "./GroupFolder";
+import { useGroups } from "../../redux/GroupProvider/UseGroup";
+import GroupFolder from "../../pages/Campaigns/SMSCampaign/GroupFolder";
 import Button from "@/Components/buttons/transparentButton";
 // import "./Contacts.css";
-import CreateGroupModal from "./CreateGroupModal";
-import FolderDetailModal from "./FolderDetailModal";
+import CreateGroupModal from "../../pages/Campaigns/SMSCampaign/CreateGroupModal";
+import FolderDetailModal from "../../pages/Campaigns/SMSCampaign/FolderDetailModal";
 
-const AvailableGroupModal = ({ openAvailableGroups, onClose, toast, setToast}) => {
+const AvailableGroupModal = ({
+  openAvailableGroups,
+  onClose,
+  toast,
+  setToast,
+}) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
@@ -202,7 +207,7 @@ const AvailableGroupModal = ({ openAvailableGroups, onClose, toast, setToast}) =
           isOpen={createGroupModal}
           data={groups}
           toast={toast}
-        setToast={setToast}
+          setToast={setToast}
         />
       )}
 

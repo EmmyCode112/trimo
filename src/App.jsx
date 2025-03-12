@@ -13,10 +13,11 @@ import Signup from "@/auth/signup/Signup";
 import SetUp from "./auth/AccountSetUp/SetUp";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import PasswordReset from "./auth/forgottenPassword/PasswordReset";
-
 import Campaigns from "./pages/Campaigns/Campaigns";
-import SmsCampaignManager from "./pages/Campaigns/SMSCampaign/SmsCampaignManager";
+import CampaignManager from "@/Components/CampaignManager";
 import SmsCampaign from "./pages/Campaigns/SMSCampaign/SmsCampaign";
+import WhatsAppMessageCreation from "./pages/Campaigns/WhatsAppCampaign/WhatsAppMessageCreation";
+import  WhatsAppCampaign from "./pages/Campaigns/WhatsAppCampaign/WhatsAppCampaign";
 import MessageCreation from "./pages/Campaigns/SMSCampaign/MessageCreation";
 import Contact from "./pages/Contact/Contact";
 import Analytics from "./pages/Analytics/Analytics";
@@ -134,13 +135,22 @@ const App = () => {
                       element={<SmsCampaign />}
                     />
                     <Route
-                      path={`/campaigns/smsCampaign/create-capaign`}
+                      path={`/campaigns/WhatsApp-campaign`}
+                      element={<WhatsAppCampaign />}
+                    />
+                    <Route
+                      path={`/campaigns/WhatsApp-campaign/create`}
+                      element={<WhatsAppMessageCreation />}
+                    />
+                    
+                    <Route
+                      path={`/campaigns/smsCampaign/create`}
                       element={<MessageCreation />}
                     />
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
 
-                  <SmsCampaignManager />
+                  <CampaignManager />
                 </div>
               </div>
             }

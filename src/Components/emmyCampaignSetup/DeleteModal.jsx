@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Icons } from "../../../assets/assets";
-import Button from "../../../Components/buttons/transparentButton";
+import { Icons } from "@/assets/assets";
+import Button from "@/Components/buttons/transparentButton";
 
-const DeleteModal = ({ isOpenDeleteModal, onClose, onDelete }) => {
+const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
@@ -51,10 +51,6 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, onDelete }) => {
     dragRef.current = null;
   };
 
- const handleDelete = ()=> {
-    onDelete();
-    onClose();
-  }
   if (!isOpenDeleteModal) return null;
 
   return (
@@ -109,7 +105,7 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, onDelete }) => {
             />
 
             <Button
-              onClick={handleDelete}
+              onClick={() => onDelete(contact.id)}
               label="Delete Contact"
               className="rounded-[8px] border bg-[#CB1E33] text-white"
             />

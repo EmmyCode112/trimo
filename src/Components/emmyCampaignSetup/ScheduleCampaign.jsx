@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Icons } from "../../../assets/assets";
+import { Icons } from "../../assets/assets";
 import Button from "@/Components/buttons/transparentButton";
 
 const ScheduleCampaign = ({
@@ -174,7 +174,6 @@ const ScheduleCampaign = ({
               onClick={() => setShowClock(!showClock)}
               ref={timeRef}
             >
-              
               <div className="flex justify-between items-center">
                 <p>{selectedTime || "Select time"}</p>
                 <img src={Icons.clockIcon} alt="time" />
