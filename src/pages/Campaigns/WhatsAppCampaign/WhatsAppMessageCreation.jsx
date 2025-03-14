@@ -7,6 +7,7 @@ import { useRecipients } from "@/redux/UseRecipient";
 import ScheduleCampaign from "./ScheduleCampaign";
 import CreationRecipientModal from "@/Components/emmyCampaignSetup/CreationRecipientModal";
 import { useNavigate } from "react-router-dom";
+import SmallScreen from "./SmallScreenPreviewPanel";
 
 const WhatsAppMessageCreation = () => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const WhatsAppMessageCreation = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const navigate = useNavigate();
+  const [smPreviewPanel, setSmPreviewPanel] = useState(false);
 
   const isMessageScheduled =
     schedule === "sendNow" ||
@@ -29,6 +31,7 @@ const WhatsAppMessageCreation = () => {
 
   const isScheduleEnabled =
     message.header.trim() !== "" && message.description.trim() !== "";
+
   console.log("parent component", imageSrc);
   return (
     <div className="px-[31px] py-[32px] flex flex-col gap-[22px]">
@@ -55,7 +58,7 @@ const WhatsAppMessageCreation = () => {
         </div>
       </div>
       <div className="flex items-start gap-[45px]">
-        <div className="flex flex-col gap-y-[25px] md:w-2/3">
+        <div className="flex flex-col gap-y-[25px] lg:w-2/3 w-full">
           <div>
             <MessageEditor
               customer={recipients}
@@ -63,38 +66,41 @@ const WhatsAppMessageCreation = () => {
               setImageSrc={setImageSrc}
               setImageUrl={setImageUrl}
               imageUrl={imageUrl}
+              isOpenPreviewPanel={() => setSmPreviewPanel(true)}
             />
           </div>
           <div>
             <SelectedRecipient openForm={() => setOpenFormModal(true)} />
           </div>
         </div>
-        <div className="md:w-1/3">
-          <MessagePreview
-            customer={recipients[0]}
-            message={message}
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-          />
+        <div className="md:w-1/3 hidden lg:block overflow-hidden">
+          <MessagePreview customer={recipients[0]} message={message} />
         </div>
       </div>
       <div>
-        {isScheduleEnabled && (
-          <ScheduleCampaign
-            setSchedule={setSchedule}
-            schedule={schedule}
-            setSelectedDate={setSelectedDate}
-            setSelectedTime={setSelectedTime}
-            selectedTime={selectedTime}
-            selectedDate={selectedDate}
-          />
-        )}
+        <ScheduleCampaign
+          setSchedule={setSchedule}
+          schedule={schedule}
+          setSelectedDate={setSelectedDate}
+          setSelectedTime={setSelectedTime}
+          selectedTime={selectedTime}
+          selectedDate={selectedDate}
+          isDisabled={!isScheduleEnabled}
+        />
       </div>
 
       {openFormModal && (
         <CreationRecipientModal
           onOpen={openFormModal}
           onClose={() => setOpenFormModal(false)}
+        />
+      )}
+
+      {smPreviewPanel && (
+        <SmallScreen
+          message={message}
+          onClose={() => setSmPreviewPanel(false)}
+          isOpen={smPreviewPanel}
         />
       )}
     </div>

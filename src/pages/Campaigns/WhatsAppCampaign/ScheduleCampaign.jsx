@@ -11,6 +11,7 @@ const ScheduleCampaign = ({
   selectedTime,
   selectedDate,
   schedule,
+  isDisabled,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showClock, setShowClock] = useState(false);
@@ -80,8 +81,12 @@ const ScheduleCampaign = ({
 
       <div className="flex gap-6 items-center mt-5">
         <div
-          className="cursor-pointer flex gap-2 items-center"
-          onClick={() => setSchedule("sendNow")}
+          className={`cursor-pointer flex gap-2 items-center ${
+            isDisabled
+              ? "pointer-events-none opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+          onClick={() => !isDisabled && setSchedule("sendNow")}
         >
           <div
             className={`w-[20px] h-[20px] border rounded-full flex items-center justify-center ${
@@ -95,8 +100,12 @@ const ScheduleCampaign = ({
           <p className="text-[#484848] font-medium text-[16px]">Send Now</p>
         </div>
         <div
-          className="cursor-pointer flex gap-2 items-center"
-          onClick={() => setSchedule("scheduleLater")}
+          className={`cursor-pointer flex gap-2 items-center ${
+            isDisabled
+              ? "pointer-events-none opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+          onClick={() => !isDisabled && setSchedule("scheduleLater")}
         >
           <div
             className={`w-[20px] h-[20px] border rounded-full flex items-center justify-center ${

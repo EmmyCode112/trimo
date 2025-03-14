@@ -2,7 +2,15 @@ import { Icons } from "@/assets/assets";
 import Button from "@/Components/buttons/transparentButton";
 import AddTemplate from "./AddTemplate";
 
-const MessageEditor = ({ customers, message, setMessage, setImageSrc, setImageUrl, imageUrl }) => {
+const MessageEditor = ({
+  customers,
+  message,
+  setMessage,
+  setImageSrc,
+  setImageUrl,
+  imageUrl,
+  isOpenPreviewPanel,
+}) => {
   const handleChange = (e) => {
     setMessage((prev) => ({
       ...prev,
@@ -11,8 +19,14 @@ const MessageEditor = ({ customers, message, setMessage, setImageSrc, setImageUr
   };
 
   return (
-    <div className="flex flex-col">
-      <p className="mb-[6px] bg-[#FAFAFA] rounded-[10px] p-6">
+    <div className="flex flex-col gap-3">
+      <p
+        className="text-end text-[18px] cursor-pointer block lg:hidden"
+        onClick={isOpenPreviewPanel}
+      >
+        Preview Here
+      </p>
+      <div className="mb-[6px] bg-[#FAFAFA] rounded-[10px] p-6">
         <div className="flex flex-col gap-y-[18px]">
           <form className="flex flex-col gap-y-[18px]">
             <label className="flex flex-col gap-y-2">
@@ -36,9 +50,9 @@ const MessageEditor = ({ customers, message, setMessage, setImageSrc, setImageUr
             </label>
           </form>
           {/* template */}
-          <AddTemplate setImageSrc={setImageSrc} setImageUrl={setImageUrl} imageUrl={imageUrl}/>
+          <AddTemplate setImageSrc={setImageSrc} />
         </div>
-      </p>
+      </div>
     </div>
   );
 };

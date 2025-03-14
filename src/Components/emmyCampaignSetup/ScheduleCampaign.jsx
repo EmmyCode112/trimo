@@ -116,7 +116,7 @@ const ScheduleCampaign = ({
       </div>
 
       {schedule === "scheduleLater" && (
-        <div className="mt-4 flex items-center gap-6">
+        <div className="mt-4 flex items-center gap-6 max-md:flex-wrap">
           <div>
             <p className="text-[14px] text-[#1A1A1A]">Date</p>
 

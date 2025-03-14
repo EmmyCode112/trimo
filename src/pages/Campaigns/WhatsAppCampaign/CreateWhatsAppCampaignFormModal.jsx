@@ -118,7 +118,7 @@ const CreateWhatsAppCampaignFormModal = ({ onClose, onOpen }) => {
         ref={modalRef}
         className={`fixed bg-white overflow-y-scroll hide-scrollBar ${
           isMobile
-            ? "inset-x-0 bottom-0 rounded-t-[40px] p-3"
+            ? "inset-x-0 bottom-0 rounded-t-[40px] p-3 h-[75%]"
             : "top-4 bottom-4 right-3 w-[517px] rounded-[30px] p-[22px]"
         }`}
         onTouchStart={handleDragStart}
@@ -133,7 +133,7 @@ const CreateWhatsAppCampaignFormModal = ({ onClose, onOpen }) => {
         )}
         <div className="flex flex-col justify-between gap-3 h-full">
           <div>
-            <h2 className="text-[#1A1A1A] text-[18px] font-medium">
+            <h2 className="text-[#1A1A1A] text-[18px] font-medium mt-3">
               Create WhatsApp Campaign
             </h2>
             <p className="text-[#767676] text-[14px] font-normal max-w-[95%] md:w-full">
@@ -165,7 +165,7 @@ const CreateWhatsAppCampaignFormModal = ({ onClose, onOpen }) => {
                 ></textarea>
               </label>
               <div
-                className="border-[#D0D5DD] border rounded-[8px] px-4 py-2 flex justify-between items-center cursor-pointer relative calendar-trigger"
+                className="border-[#D0D5DD] border rounded-[8px] px-4 py-2 flex justify-between items-center cursor-pointer relative calendar-trigger w-full"
                 onClick={() => setShowCalendar(!showCalendar)}
               >
                 <p>
@@ -180,7 +180,7 @@ const CreateWhatsAppCampaignFormModal = ({ onClose, onOpen }) => {
                 {showCalendar && (
                   <div
                     ref={calendarRef}
-                    className="calendar-container absolute top-[-580%] z-10 bg-white left-[10%] p-[24px] shadow-lg rounded-[8px]"
+                    className="calendar-container absolute md:top-[-580%] z-10 bg-white md:left-[10%] p-[24px] shadow-lg rounded-[8px] top-[-750%] left-[0%] "
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex flex-col gap-4">

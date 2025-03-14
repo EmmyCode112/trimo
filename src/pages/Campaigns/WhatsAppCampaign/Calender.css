@@ -75,3 +75,9 @@
 .react-calendar__tile abbr {
   color: inherit !important;
 }
+
+@media (max-width: 430px) {
+  .calendar-container {
+    width: 100%;
+  }
+}

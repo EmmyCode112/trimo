@@ -244,17 +244,24 @@ const SignUpForm = ({ setShowOtpPopUp }) => {
         </div> */}
 
         <PhoneNumberInput
+          country={"ng"} // Default country
           value={workPhone}
           onChange={(phone) => {
             setWorkPhone(phone);
-
             if (!validateWorkPhone(phone)) {
               setErrors({ workPhone: "Work Phone must contain only numbers." });
             } else {
               setErrors({});
             }
           }}
+          disableCountryCode={true} // Prevent manual deletion of country code
+          disableDropdown={false} // Allow country selection
+          enableSearch={true} // Let users search for their country
+          inputProps={{
+            required: true,
+          }}
         />
+
         {errors.workPhone && (
           <p className="text-red-500 text-sm">{errors.workPhone}</p>
         )}

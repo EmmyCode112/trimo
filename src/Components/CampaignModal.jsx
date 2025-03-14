@@ -85,7 +85,7 @@ const CampaignModal = ({ onClose, onOpen }) => {
           <div className="w-[81px] h-2 bg-gray-300 rounded-full mx-auto mt-4" />
         )}
         <div>
-          <div className="flex justify-between gap-2 items-start">
+          <div className="flex justify-between gap-2 items-start mt-3">
             <div>
               <h2 className="font-medium text-[18px] text-[#1A1A1A] mb-[10px]">
                 Welcome onboard Owai!!
@@ -102,16 +102,16 @@ const CampaignModal = ({ onClose, onOpen }) => {
             />
           </div>
           <div className=" bg-[#F1F1F1] rounded-[15px] p-1 mt-6">
-            <div className="flex flex-col md:flex-row gap-[11px] ">
+            <div className="flex  gap-[11px] ">
               {/* sms campaign */}
               <div
                 className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer"
                 onClick={handleOpenSmsModal}
               >
                 <img src={Icons.contactFrameImport} alt="import contact" />
-                <div className="flex items-center justify-between gap-[20px]">
+                <div className="flex items-center justify-between gap-[20px] max-sm:gap-2.5">
                   <div>
-                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
+                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px] max-sm:text-[11px]">
                       SMS Campaign
                     </h2>
                     <p className="text-[#767676] text-[11px] font-normal">
@@ -131,9 +131,9 @@ const CampaignModal = ({ onClose, onOpen }) => {
               {/* email campaign */}
               <div className="bg-white rounded-[20px] flex items-center flex-col p-[10px] gap-y-[13px] cursor-pointer">
                 <img src={Icons.contactFrameManual} alt="import contact" />
-                <div className="flex items-center justify-between gap-[20px]">
+                <div className="flex items-center justify-between gap-[20px] max-sm:gap-2.5">
                   <div>
-                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
+                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px] max-sm:text-[11px]">
                       Email Campaign
                     </h2>
                     <p className="text-[#767676] text-[11px] font-normal">
@@ -151,7 +151,7 @@ const CampaignModal = ({ onClose, onOpen }) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col md:flex-row gap-[11px] mt-[11px]">
+            <div className="flex  gap-[11px] mt-[11px]">
               {/* whatsApp  campaign*/}
               <div
                 onClick={handleOpenWhatsAppModal}
@@ -160,7 +160,7 @@ const CampaignModal = ({ onClose, onOpen }) => {
                 <img src={Icons.whatsAppIcon} alt="import contact" />
                 <div className="flex items-center justify-between gap-[20px]">
                   <div>
-                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
+                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px] max-sm:text-[11px]">
                       WhatsApp Campaign
                     </h2>
                     <p className="text-[#767676] text-[11px] font-normal">
@@ -183,7 +183,7 @@ const CampaignModal = ({ onClose, onOpen }) => {
                 <img src={Icons.OtpIcon} alt="import contact" />
                 <div className="flex items-center justify-between gap-[20px]">
                   <div>
-                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px]">
+                    <h2 className="text-[#1A1A1A] text-[15px] font-medium mb-[3px] max-sm:text-[11px]">
                       OTP Campaign
                     </h2>
                     <p className="text-[#767676] text-[11px] font-normal">

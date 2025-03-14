@@ -85,6 +85,7 @@ import template_school from "./templates/school.png";
 import template_service_intro from "./templates/service_intro.png";
 import template_testimonial from "./templates/testimonial.png";
 import template_update from "./templates/update.png";
+import HeaderIcon from "./Icons/Header.png";
 
 import emptyTemplate from "./Icons/emptyTemplate.png";
 import emptyPreviewTemplate from "./Icons/emptyPreviewTemplate.png";
@@ -140,6 +141,7 @@ export const SideBarIcons = {
   contactIcon,
   integrationIcon,
   CodeRigiIcon,
+  HeaderIcon,
 };
 export const Icons = {
   trimoDashboard,

@@ -3,6 +3,7 @@ import Button from "../buttons/transparentButton";
 import { Icons } from "@/assets/assets";
 import Toast from "@/Components/Alerts/Toast";
 import TemplateList from "./TemplateList";
+import ConfirmModal from "./ConfirmModal";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,18 +16,17 @@ const AddTemplate = ({ setImageSrc }) => {
   const [enabled, setEnabled] = useState(false);
   const [openTemplateList, setOpemTemplateList] = useState(false);
   const dispatch = useDispatch();
-  // const [imageUrl, setImageUrl] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState(null);
 
   const imageUrl = useSelector((state) => state.image.imageUrl);
   const uploadedImage = useSelector((state) => state.image.uploadedImage);
   const templateImage = useSelector((state) => state.image.templateImage);
 
-  const [selectedTemplate, setSelectedTemplate] = useState([
-    {
-      selectedTemplateName: "",
-      selectedTemplateImage: null,
-    },
-  ]);
+  const [selectedTemplate, setSelectedTemplate] = useState({
+    selectedTemplateName: "",
+    selectedTemplateImage: null,
+  });
   const [image, setImage] = useState(null);
   const templateRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -43,35 +43,67 @@ const AddTemplate = ({ setImageSrc }) => {
     };
   }, [openTemplateList]);
 
-  // Handle file upload
+  const handleConfirm = () => {
+    if (pendingAction) {
+      pendingAction();
+      setPendingAction(null);
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setPendingAction(null);
+    setIsModalOpen(false);
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      const imageLink = URL.createObjectURL(file);
+
       if (templateImage || imageUrl) {
-        const confirmChange = window.confirm(
-          "A template is already selected. Changing the image will replace the current template. Do you want to proceed?"
-        );
-        if (!confirmChange) return;
+        setPendingAction(() => () => {
+          setImage(imageLink);
+          dispatch(setUploadedImage(imageLink));
+          dispatch(setTemplateImage(null));
+          dispatch(setImageUrl(""));
+          setSelectedTemplate({
+            selectedTemplateName: "",
+            selectedTemplateImage: null,
+          });
+        });
+        setIsModalOpen(true);
+        return;
       }
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      dispatch(setUploadedImage(imageUrl));
-      dispatch(setTemplateImage(null)); // Reset template selection
-      dispatch(setImageUrl("")); // Reset image URL input
+
+      setImage(imageLink);
+      dispatch(setUploadedImage(imageLink));
+      dispatch(setTemplateImage(null));
+      dispatch(setImageUrl(""));
       setSelectedTemplate({
         selectedTemplateName: "",
         selectedTemplateImage: null,
       });
+
+      console.log("Uploaded Image:", imageLink); // Check if imageUrl is correct
     }
   };
 
-  // Handle template selection
   const handleTemplateSelect = (template) => {
     if (image || imageUrl) {
-      const confirmChange = window.confirm(
-        "A template is already selected. Changing the image will replace the current template. Do you want to proceed?"
-      );
-      if (!confirmChange) return;
+      setPendingAction(() => () => {
+        setSelectedTemplate({
+          selectedTemplateName: template.name,
+          selectedTemplateImage: template.icon,
+        });
+        dispatch(setTemplateImage(template.icon));
+        dispatch(setUploadedImage(null));
+        dispatch(setImageUrl(""));
+        setImage("");
+        setOpemTemplateList(false);
+      });
+      setIsModalOpen(true);
+      return;
     }
 
     setSelectedTemplate({
@@ -79,28 +111,35 @@ const AddTemplate = ({ setImageSrc }) => {
       selectedTemplateImage: template.icon,
     });
     dispatch(setTemplateImage(template.icon));
-    dispatch(setUploadedImage(null)); // Reset uploaded file
-    dispatch(setImageUrl("")); // Reset image URL input
+    setOpemTemplateList(false);
+    dispatch(setUploadedImage(null));
+    dispatch(setImageUrl(""));
     setImage("");
-    setTimeout(() => setOpemTemplateList(false), 0);
   };
 
   const [toast, setToast] = useState(null);
 
-  // Handle URL input change
   const handleImageUrlChange = (event) => {
     const url = event.target.value;
 
     if (image || templateImage) {
-      const confirmChange = window.confirm(
-        "A template is already selected. Changing the image will replace the current template. Do you want to proceed?"
-      );
-      if (!confirmChange) return;
+      setPendingAction(() => () => {
+        dispatch(setImageUrl(url));
+        dispatch(setUploadedImage(null));
+        dispatch(setTemplateImage(null));
+        setSelectedTemplate({
+          selectedTemplateName: "",
+          selectedTemplateImage: null,
+        });
+        setImage("");
+      });
+      setIsModalOpen(true);
+      return;
     }
 
     dispatch(setImageUrl(url));
-    dispatch(setUploadedImage(null)); // Reset uploaded file
-    dispatch(setTemplateImage(null)); // Reset template selection
+    dispatch(setUploadedImage(null));
+    dispatch(setTemplateImage(null));
     setSelectedTemplate({
       selectedTemplateName: "",
       selectedTemplateImage: null,
@@ -123,29 +162,37 @@ const AddTemplate = ({ setImageSrc }) => {
         title: "Upload Failed",
         message: "Invalid image URL!",
       });
-      dispatch(setImageUrl("")); // Clear invalid URL
+      dispatch(setImageUrl(""));
     };
   };
 
   const handleImageClick = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
+
+  useEffect(() => {
+    console.log("Uploaded Image Updated:", uploadedImage);
+  }, [uploadedImage]);
 
   return (
     <div className="flex flex-col gap-y-[18px] w-full">
       <div className="flex flex-col gap-y-[6px] w-full">
-        <div className="flex justify-between gap-6 items-center w-full">
+        <div className="flex justify-between gap-2 items-center max-md:flex-wrap w-full">
           <p>Select Template Message</p>
-          <Button
-            label="Add New Template"
-            className="rounded-[8px] border border-[#383268] hover:bg-[#383268] hover:text-white text-[#383268]"
-          />
+
+          <div>
+            <Button
+              label="Add New Template"
+              className="rounded-[8px] border border-[#383268] hover:bg-[#383268] hover:text-white text-[#383268]"
+            />
+          </div>
         </div>
 
-        {/* template dropdown */}
         <div
           ref={templateRef}
-          className="w-full border-[#D0D5DD] border rounded-[8px] py-[10px] px-[14px] cursor-pointer relative"
+          className="w-full border-[#D0D5DD] border rounded-[8px] py-[10px] px-[14px] cursor-pointer relative max-sm:mt-5"
         >
           <div
             className="w-full flex justify-between items-center gap-2 "
@@ -160,7 +207,6 @@ const AddTemplate = ({ setImageSrc }) => {
             >
               {selectedTemplate.selectedTemplateName || "Select template"}
             </p>
-
             <img src={Icons.arrowDown} alt="select" />
           </div>
           {openTemplateList && <TemplateList onSelect={handleTemplateSelect} />}
@@ -184,12 +230,11 @@ const AddTemplate = ({ setImageSrc }) => {
               ></div>
             </div>
           </div>
-
           {enabled && (
-            <div className="flex items-center gap-6 mt-4 w-full">
+            <div className="flex items-center gap-6 mt-4 w-full max-sm:flex-col">
               {/* Image Selector */}
               <div
-                className="w-[90px] h-[90px] basis-[120px] border border-gray-300 rounded-md flex items-center justify-center cursor-pointer"
+                className="w-[90px] h-[90px] max-sm:w-[200px] basis-[120px] border border-gray-300 rounded-md flex items-center justify-center cursor-pointer"
                 onClick={handleImageClick}
               >
                 {image ? (
@@ -215,14 +260,14 @@ const AddTemplate = ({ setImageSrc }) => {
                   onChange={handleImageChange}
                 />
               </div>
-
-              <div className="flex items-center gap-6  w-full ">
+              <div className="flex items-center gap-6  w-full  max-sm:flex-col">
                 <p className="text-[#484848] text-[14px] font-normal">Or</p>
 
                 <div className="flex flex-col gap-y-2 w-full">
-                  <p className="text-[#344054] text-[14px] font-normal">
+                  <p className="text-[#344054] text-[14px] font-normal max-sm:text-center">
                     Provide the link to the new header image
                   </p>
+
                   <input
                     type="text"
                     placeholder="https://linkToImage.com/past_link_upload.png"
@@ -232,22 +277,19 @@ const AddTemplate = ({ setImageSrc }) => {
                   />
                 </div>
               </div>
-              {/* Preview Panel */}
-              {/* {imageUrl && (
-                <div className="w-[90px] h-[90px] border border-gray-300 rounded-md mt-2">
-                  <img
-                    src={imageUrl}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    onError={() => setImageUrl("")}
-                  />
-                </div>
-              )} */}
             </div>
           )}
         </div>
+
+        {toast && <Toast {...toast} onClose={() => setToast(null)} />}
+        {isModalOpen && (
+          <ConfirmModal
+            onClose={handleCancel}
+            isOpen={isModalOpen}
+            onConfirm={handleConfirm}
+          />
+        )}
       </div>
-      {toast && <Toast {...toast} onClose={() => setToast(null)} />}
     </div>
   );
 };

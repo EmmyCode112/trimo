@@ -96,7 +96,7 @@ const RecipientsTable = ({ openFormModal, openDeleteModal }) => {
   return (
     <div className="w-full rounded-[15px] py-[20px] px-[20px] flex flex-col gap-[22px]  border-[5px] border-[#F1F1F1]">
       <div className="flex gap-3 justify-between items-center border-b border-b-[#EAECF0] pb-[20px]">
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-2 flex-col sm:flex-row">
           <h2 className="text-[18px] font-meidium text-[#3F3E3E]">
             Recipients
           </h2>

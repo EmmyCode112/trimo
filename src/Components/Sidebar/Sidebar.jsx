@@ -42,6 +42,16 @@ const Sidebar = ({ isSidebarOpen }) => {
     }
   }, [location.pathname]);
 
+  const user = {
+    id: 1,
+    name: "CodeRigi",
+    avatar: null, // Can be null or a URL if needed
+    role: "Admin",
+  };
+
+  const getUserInitial = (name) => {
+    return name ? name.charAt(0).toUpperCase() : "?";
+  };
   return (
     <div className="bg-[#383268] h-full flex flex-col justify-between w-[82px] hover:w-[263px] transition-all duration-300 ease-in-out overflow-hidden group">
       <div className="w-full h-full flex flex-col gap-y-3">
@@ -49,7 +59,12 @@ const Sidebar = ({ isSidebarOpen }) => {
           <img
             src={SideBarIcons.TriimoIcon}
             alt="Logo"
-            className="w-[24px] group-hover:w-full transition-all duration-300 self-center("
+            className="w-[24px] group-hover:w-full transition-all duration-300 hidden group-hover:block"
+          />
+          <img
+            src={SideBarIcons.HeaderIcon}
+            alt="Logo"
+            className="w-full mt-3 block group-hover:hidden transition-all duration-300"
           />
         </div>
 
@@ -91,14 +106,12 @@ const Sidebar = ({ isSidebarOpen }) => {
 
       <div className="flex justify-between items-center px-4 group-hover:px-7 text-[#EBEBF0] font-medium py-[20px] border-t border-t-[#e9e9e92f] transition-all duration-300 mt-3">
         <div className="flex gap-3 items-center">
-          <img
-            src={SideBarIcons.CodeRigiIcon}
-            alt=""
-            className="w-[40px] h-[40px] min-w-[40px]"
-          />
+          <div className="w-[40px] h-[40px] min-w-[40px] bg-[#9A2444] text-white flex items-center justify-center rounded-full text-lg font-medium">
+            {getUserInitial(user.name)}
+          </div>
           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-            <h3 className="text-sm">CodeRigi</h3>
-            <p className="text-[#E7E7E7] text-[13px] font-[300]">Admin</p>
+            <h3 className="text-sm">{user.name}</h3>
+            <p className="text-[#E7E7E7] text-[13px] font-[300]">{user.role}</p>
           </div>
         </div>
         <img

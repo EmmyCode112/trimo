@@ -3,7 +3,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "@/assets/assets";
 import Button from "@/Components/buttons/transparentButton";
 
-const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
+const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
@@ -16,14 +16,14 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
       }
     };
 
-    if (isOpenDeleteModal) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpenDeleteModal, onClose]);
+  }, [isOpen, onClose]);
 
   // Handle dragging down on mobile to close
   const handleDragStart = (e) => {
@@ -51,7 +51,7 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
     dragRef.current = null;
   };
 
-  if (!isOpenDeleteModal) return null;
+  if (!isOpen) return null;
 
   return (
     <div className="fixed flex items-center justify-center max-md:items-end inset-0 z-50 bg-[#C7C7C74D] backdrop-blur-[8.1px]">
@@ -89,11 +89,11 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
             />
             <div>
               <h2 className="mb-1 text-[#1A1A1A] text-[20px] font-medium">
-                Delete Contact
+                Replace Template
               </h2>
               <p className="text-[#767676] font-normal text-[15px] w-[80%] max-sm:w-full">
-                Are you sure you want to delete this contact? This action cannot
-                be undone.
+                A template is already selected. Changing the image will replace
+                the current template. Do you want to proceed?
               </p>
             </div>
           </div>
@@ -105,9 +105,9 @@ const DeleteModal = ({ isOpenDeleteModal, onClose, contact, onDelete }) => {
             />
 
             <Button
-              onClick={() => onDelete(contact.id)}
-              label="Delete Contact"
+              label=" Replace Template"
               className="rounded-[8px] border bg-[#CB1E33] text-white"
+              onClick={onConfirm}
             />
           </div>
         </div>
