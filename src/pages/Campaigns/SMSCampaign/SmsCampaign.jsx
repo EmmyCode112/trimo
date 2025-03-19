@@ -144,6 +144,8 @@ const SmsCampaign = () => {
         <CreateRecipientFormModal
           onClose={() => setOpenFormModal(false)}
           onOpen={openFormModal}
+          toast={toast}
+          setToast={setToast}
         />
       )}
 
@@ -160,6 +162,8 @@ const SmsCampaign = () => {
           onClose={() => setImportModal(false)}
           contacts={recipients}
           setContacts={setRecipients}
+          setToast={setToast}
+          toast={toast}
         />
       )}
 

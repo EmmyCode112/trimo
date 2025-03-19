@@ -3,7 +3,9 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Icons } from "../../assets/assets";
 import Button from "../buttons/transparentButton";
 import { useRecipients } from "../../redux/UseRecipient";
-const CreationRecipientModal = ({ onClose, onOpen }) => {
+import PhoneNumberInput from "@/Components/PhoneNumberInput";
+
+const CreationRecipientModal = ({ onClose, onOpen, setToast, toast }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
@@ -64,10 +66,61 @@ const CreationRecipientModal = ({ onClose, onOpen }) => {
     !formData.email ||
     !formData.phone;
 
+  const showToast = (type, title, message) => {
+    console.log("Toast triggered:", { type, title, message });
+    setToast({ show: true, type, title, message });
+    setTimeout(() => {
+      setToast({ show: false, type: "", title: "", message: "" });
+    }, 3000);
+  };
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) return;
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !nameRegex.test(formData.firstName) ||
+      !nameRegex.test(formData.lastName)
+    ) {
+      showToast(
+        "error",
+        "Validation Error",
+        "First name and last name should only contain letters."
+      );
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      showToast(
+        "error",
+        "Invalid Email",
+        "Please enter a valid email address."
+      );
+      return;
+    }
+
+    const isDuplicate = recipients.some(
+      (recipient) =>
+        (recipient.firstName.toLowerCase() ===
+          formData.firstName.toLowerCase() &&
+          recipient.lastName.toLowerCase() ===
+            formData.lastName.toLowerCase()) ||
+        recipient.email.toLowerCase() === formData.email.toLowerCase() ||
+        recipient.phone === formData.phone
+    );
+
+    if (isDuplicate) {
+      showToast(
+        "error",
+        "Duplicate Entry",
+        "This recipient is already in your list. Avoid duplicates to streamline delivery."
+      );
+      return;
+    }
 
     const newRecipient = {
       id: recipients.length + 1,
@@ -77,6 +130,7 @@ const CreationRecipientModal = ({ onClose, onOpen }) => {
     setRecipients([...recipients, newRecipient]);
     setFormData({ firstName: "", lastName: "", email: "", phone: "" });
     onClose();
+    showToast("success", "Success", "Recipient added successfully!");
   };
 
   if (!onOpen) return null;
@@ -185,25 +239,17 @@ const CreationRecipientModal = ({ onClose, onOpen }) => {
                 <p className="text-[14px] font-medium text-[#1A1A1A]">
                   Phone Number
                 </p>
-                <div className="flex gap-2 px-4 py-2 border border-gray-300 rounded-lg items-center">
-                  <img
-                    src={Icons.naira}
-                    alt="country code"
-                    className="signin-icons"
-                  />
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        phone: e.target.value,
-                      }))
-                    }
-                    className="w-full outline-none border-none text-[#667085] text-[16px] font-[400]"
-                  />
-                </div>
+
+                <PhoneNumberInput
+                  country={"ng"}
+                  value={formData.phone}
+                  onChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phone: value, // Use value directly instead of e.target.value
+                    }))
+                  }
+                />
               </label>
             </div>
           </div>

@@ -5,14 +5,13 @@ import Button from "../buttons/transparentButton";
 import { useRecipients } from "../../redux/UseRecipient";
 import PhoneNumberInput from "@/Components/PhoneNumberInput";
 
-const CreateRecipientFormModal = ({ onClose, onOpen }) => {
+const CreateRecipientFormModal = ({ onClose, onOpen, setToast, toast }) => {
   const modalRef = useRef(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const dragRef = useRef(null);
   const { recipients, setRecipients } = useRecipients();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const nameReg = /^[A-Za-z][A-Za-z\s'-]*$/;
 
+  // Close modal when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -29,6 +28,7 @@ const CreateRecipientFormModal = ({ onClose, onOpen }) => {
     };
   }, [onOpen, onClose]);
 
+  // Handle dragging down on mobile to close
   const handleDragStart = (e) => {
     if (!isMobile) return;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -60,79 +60,78 @@ const CreateRecipientFormModal = ({ onClose, onOpen }) => {
     email: "",
     phone: "",
   });
+  const isFormValid =
+    !formData.firstName ||
+    !formData.lastName ||
+    !formData.email ||
+    !formData.phone;
 
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-
-  const validateField = (name, value) => {
-    let error = "";
-
-    if (name === "firstName" || name === "lastName") {
-      if (!value)
-        error = `${name === "firstName" ? "First" : "Last"} name is required.`;
-      else if (!nameReg.test(value))
-        error = `Invalid ${
-          name === "firstName" ? "first" : "last"
-        } name format.`;
-    }
-
-    if (name === "email") {
-      if (!value) error = "Email is required.";
-      else if (!emailRegex.test(value)) error = "Invalid email format.";
-    }
-
-    if (name === "phone" && !value) {
-      error = "Phone number is required.";
-    }
-
-    setErrors((prev) => ({ ...prev, [name]: error }));
+  const showToast = (type, title, message) => {
+    console.log("Toast triggered:", { type, title, message });
+    setToast({ show: true, type, title, message });
+    setTimeout(() => {
+      setToast({ show: false, type: "", title: "", message: "" });
+    }, 3000);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (touched[name]) {
-      validateField(name, value);
-    }
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-    validateField(name, value);
-  };
-
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newTouched = {
-      firstName: true,
-      lastName: true,
-      email: true,
-      phone: true,
+    if (isFormValid) return;
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !nameRegex.test(formData.firstName) ||
+      !nameRegex.test(formData.lastName)
+    ) {
+      showToast(
+        "error",
+        "Validation Error",
+        "First name and last name should only contain letters."
+      );
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      showToast(
+        "error",
+        "Invalid Email",
+        "Please enter a valid email address."
+      );
+      return;
+    }
+
+    const isDuplicate = recipients.some(
+      (recipient) =>
+        (recipient.firstName.toLowerCase() ===
+          formData.firstName.toLowerCase() &&
+          recipient.lastName.toLowerCase() ===
+            formData.lastName.toLowerCase()) ||
+        recipient.email.toLowerCase() === formData.email.toLowerCase() ||
+        recipient.phone === formData.phone
+    );
+
+    if (isDuplicate) {
+      showToast(
+        "error",
+        "Duplicate Entry",
+        "This recipient is already in your list. Avoid duplicates to streamline delivery."
+      );
+      return;
+    }
+
+    const newRecipient = {
+      id: recipients.length + 1,
+      ...formData,
     };
-    setTouched(newTouched);
 
-    Object.keys(formData).forEach((key) => validateField(key, formData[key]));
-
-    if (Object.values(errors).some((error) => error !== "")) return;
-
-    const newRecipient = { id: recipients.length + 1, ...formData };
     setRecipients([...recipients, newRecipient]);
-
     setFormData({ firstName: "", lastName: "", email: "", phone: "" });
-    setErrors({});
-    setTouched({});
     onClose();
+    showToast("success", "Success", "Recipient added successfully!");
   };
-
-  const isValid =
-    formData.firstName &&
-    formData.lastName &&
-    formData.email &&
-    formData.phone &&
-    Object.values(errors).every((error) => !error);
 
   if (!onOpen) return null;
 
@@ -155,75 +154,116 @@ const CreateRecipientFormModal = ({ onClose, onOpen }) => {
         {isMobile && (
           <div className="w-[81px] h-2 bg-gray-300 rounded-full mx-auto mt-4" />
         )}
-
-        <div className="flex flex-col justify-between h-full gap-5 mt-3">
+        <div className="flex flex-col justify-between h-full gap-5">
           <div>
-            <h2 className="text-[#1A1A1A] text-[18px] font-medium ">
-              Enter Contact Manually
-            </h2>
-            <p className="text-[#767676] text-[14px] font-normal max-w-[95%] md:w-full">
-              Add recipient one by one for quick updates or smaller campaigns
-            </p>
-
-            {["firstName", "lastName", "email"].map((field) => (
-              <label key={field} className="flex flex-col gap-2">
+            <div>
+              <h2 className="text-[#1A1A1A] text-[18px] font-medium">
+                Enter Contact Manually
+              </h2>
+              <p className="text-[#767676] text-[14px] font-normal max-w-[95%] md:w-full">
+                Add recipient one by one for quick updates or smaller campaigns
+              </p>
+            </div>
+            <div>
+              <label className="flex flex-col gap-2">
                 <p className="text-[14px] font-medium text-[#1A1A1A]">
-                  {field === "firstName"
-                    ? "First Name"
-                    : field === "lastName"
-                    ? "Last Name"
-                    : "Email"}
+                  First Name
                 </p>
                 <div className="flex gap-2 px-4 py-2 border border-gray-300 rounded-lg items-center">
                   <img
                     src={Icons.profile}
-                    alt={field}
+                    alt="first name"
                     className="signin-icons"
                   />
                   <input
-                    type={field === "email" ? "email" : "text"}
-                    name={field}
-                    value={formData[field]}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                      }))
+                    }
                     className="w-full outline-none border-none text-[#667085] text-[16px] font-[400]"
                   />
                 </div>
-                {touched[field] && errors[field] && (
-                  <p className="text-red-500 text-sm">{errors[field]}</p>
-                )}
               </label>
-            ))}
+              <label className="flex flex-col gap-2">
+                <p className="text-[14px] font-medium text-[#1A1A1A]">
+                  Last Name
+                </p>
+                <div className="flex gap-2 px-4 py-2 border border-gray-300 rounded-lg items-center">
+                  <img
+                    src={Icons.profile}
+                    alt="last name"
+                    className="signin-icons"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                      }))
+                    }
+                    className="w-full outline-none border-none text-[#667085] text-[16px] font-[400]"
+                  />
+                </div>
+              </label>
+              <label className="flex flex-col gap-2">
+                <p className="text-[14px] font-medium text-[#1A1A1A]">Email</p>
+                <div className="flex gap-2 px-4 py-2 border border-gray-300 rounded-lg items-center">
+                  <img
+                    src={Icons.smsIcon}
+                    alt="email"
+                    className="signin-icons"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
+                    className="w-full outline-none border-none text-[#667085] text-[16px] font-[400]"
+                  />
+                </div>
+              </label>
+              <label className="flex flex-col gap-2">
+                <p className="text-[14px] font-medium text-[#1A1A1A]">
+                  Phone Number
+                </p>
 
-            <label className="flex flex-col gap-2">
-              <p className="text-[14px] font-medium text-[#1A1A1A]">
-                Phone Number
-              </p>
-              <PhoneNumberInput
-                country={"ng"}
-                value={formData.phone}
-                onChange={(value) => {
-                  setFormData((prev) => ({ ...prev, phone: value }));
-                  if (touched.phone) validateField("phone", value);
-                }}
-              />
-              {touched.phone && errors.phone && (
-                <p className="text-red-500 text-sm">{errors.phone}</p>
-              )}
-            </label>
+                <PhoneNumberInput
+                  country={"ng"}
+                  value={formData.phone}
+                  onChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phone: value, // Use value directly instead of e.target.value
+                    }))
+                  }
+                />
+              </label>
+            </div>
           </div>
-
           <div className="flex gap-3 justify-end">
             <Button
               label="Cancel"
               onClick={onClose}
-              className="rounded-[8px] border border-[#383268] text-[#383268]"
+              className="rounded-[8px] border hover:bg-[#eeeff0] border-[#383268] text-[#383268]"
             />
             <Button
               label="Add Contact"
+              disabled={isFormValid}
               onClick={handleSubmit}
-              disabled={!isValid}
-              className="rounded-[8px] border bg-[#383268] text-white"
+              className="rounded-[8px] border border-[#C1BFDO] text-white bg-[#383268] hover:bg-[#41397c]"
             />
           </div>
         </div>

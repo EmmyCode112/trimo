@@ -16,6 +16,11 @@
 @media screen and (max-width: 640px) {
     .right-container{
         width: 100% !important; 
+
+        >* {
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 

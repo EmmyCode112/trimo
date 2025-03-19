@@ -17,7 +17,7 @@ import Campaigns from "./pages/Campaigns/Campaigns";
 import CampaignManager from "@/Components/CampaignManager";
 import SmsCampaign from "./pages/Campaigns/SMSCampaign/SmsCampaign";
 import WhatsAppMessageCreation from "./pages/Campaigns/WhatsAppCampaign/WhatsAppMessageCreation";
-import  WhatsAppCampaign from "./pages/Campaigns/WhatsAppCampaign/WhatsAppCampaign";
+import WhatsAppCampaign from "./pages/Campaigns/WhatsAppCampaign/WhatsAppCampaign";
 import MessageCreation from "./pages/Campaigns/SMSCampaign/MessageCreation";
 import Contact from "./pages/Contact/Contact";
 import Analytics from "./pages/Analytics/Analytics";
@@ -25,6 +25,9 @@ import Setting from "./pages/Settings/Setting";
 import Wallet from "./pages/Wallet/Wallet";
 import Notification from "./pages/Notification/Notification";
 import Groups from "./pages/Groups/Groups";
+import CampaignPage from "./pages/Campaigns/EmailCampaign";
+import Home from "./pages/Campaigns/Email/page";
+// import CampaignPage from "./pages/Campaigns/Campaigns";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
@@ -86,7 +89,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/sign-in" />} />
           </>
         ) : (
-          // Authenticated Layout
+          // Authenticated Layout for authenticated users
           <Route
             path="/*"
             element={
@@ -124,6 +127,7 @@ const App = () => {
                       element={<CampaignPage />}
                     /> */}
                     <Route path="/contacts" element={<Contact />} />
+                    <Route path="/campaigns/email" element={<CampaignPage />} />
                     <Route path="/analytics" element={<Analytics />} />
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/wallet" element={<Wallet />} />
@@ -134,6 +138,7 @@ const App = () => {
                       path={`/campaigns/smsCampaign`}
                       element={<SmsCampaign />}
                     />
+                    <Route path={`/campaigns/template`} element={<Home />} />
                     <Route
                       path={`/campaigns/WhatsApp-campaign`}
                       element={<WhatsAppCampaign />}
@@ -142,7 +147,7 @@ const App = () => {
                       path={`/campaigns/WhatsApp-campaign/create`}
                       element={<WhatsAppMessageCreation />}
                     />
-                    
+
                     <Route
                       path={`/campaigns/smsCampaign/create`}
                       element={<MessageCreation />}

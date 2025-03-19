@@ -7,6 +7,7 @@ import { useRecipients } from "../../../redux/UseRecipient";
 import ScheduleCampaign from "../../../Components/emmyCampaignSetup/ScheduleCampaign";
 import CreationRecipientModal from "../../../Components/emmyCampaignSetup/CreationRecipientModal";
 import { useNavigate } from "react-router-dom";
+import Toast from "@/Components/Alerts/Toast";
 
 const MessageCreation = () => {
   useEffect(() => {
@@ -20,10 +21,17 @@ const MessageCreation = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const navigate = useNavigate();
-
+  const [toast, setToast] = useState({
+    show: false,
+    type: "",
+    title: "",
+    message: "",
+  });
   const isMessageScheduled =
     schedule === "sendNow" ||
     (schedule === "scheduleLater" && selectedDate && selectedTime);
+
+  const isScheduleDisabled = !message.length > 0;
 
   return (
     <div className="px-[31px] py-[32px] flex flex-col gap-[22px]">
@@ -63,22 +71,32 @@ const MessageCreation = () => {
         </div>
       </div>
       <div>
-        {message.length > 0 && (
-          <ScheduleCampaign
-            setSchedule={setSchedule}
-            schedule={schedule}
-            setSelectedDate={setSelectedDate}
-            setSelectedTime={setSelectedTime}
-            selectedTime={selectedTime}
-            selectedDate={selectedDate}
-          />
-        )}
+        <ScheduleCampaign
+          setSchedule={setSchedule}
+          schedule={schedule}
+          setSelectedDate={setSelectedDate}
+          setSelectedTime={setSelectedTime}
+          selectedTime={selectedTime}
+          selectedDate={selectedDate}
+          isDisabled={isScheduleDisabled}
+        />
       </div>
 
       {openFormModal && (
         <CreationRecipientModal
           onOpen={openFormModal}
           onClose={() => setOpenFormModal(false)}
+          toast={toast}
+          setToast={setToast}
+        />
+      )}
+
+      {toast.show && (
+        <Toast
+          type={toast.type}
+          title={toast.title}
+          message={toast.message}
+          onClose={() => setToast({ show: false })}
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { Icons } from "../../assets/assets";
+import { Icons } from "@/assets/assets";
 import Button from "@/Components/buttons/transparentButton";
 
 const ScheduleCampaign = ({
@@ -11,6 +11,7 @@ const ScheduleCampaign = ({
   selectedTime,
   selectedDate,
   schedule,
+  isDisabled,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showClock, setShowClock] = useState(false);
@@ -74,14 +75,18 @@ const ScheduleCampaign = ({
       <h2 className="text-[20px] text-[#1A1A1A] font-medium">
         When do you want to send it?
       </h2>
-      <p className="text-[#767676] text-[14px] font-normal">
+      <p className="text-[#767676] text-[14px] font-normal mt-[6px]">
         Decide when you want to send your broadcast message
       </p>
 
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-6 items-center mt-5">
         <div
-          className="cursor-pointer flex gap-2 items-center"
-          onClick={() => setSchedule("sendNow")}
+          className={`cursor-pointer flex gap-2 items-center ${
+            isDisabled
+              ? "pointer-events-none opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+          onClick={() => !isDisabled && setSchedule("sendNow")}
         >
           <div
             className={`w-[20px] h-[20px] border rounded-full flex items-center justify-center ${
@@ -95,8 +100,12 @@ const ScheduleCampaign = ({
           <p className="text-[#484848] font-medium text-[16px]">Send Now</p>
         </div>
         <div
-          className="cursor-pointer flex gap-2 items-center"
-          onClick={() => setSchedule("scheduleLater")}
+          className={`cursor-pointer flex gap-2 items-center ${
+            isDisabled
+              ? "pointer-events-none opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+          onClick={() => !isDisabled && setSchedule("scheduleLater")}
         >
           <div
             className={`w-[20px] h-[20px] border rounded-full flex items-center justify-center ${
@@ -116,9 +125,9 @@ const ScheduleCampaign = ({
       </div>
 
       {schedule === "scheduleLater" && (
-        <div className="mt-4 flex items-center gap-6 max-md:flex-wrap">
+        <div className="mt-4 flex items-center gap-6">
           <div>
-            <p className="text-[14px] text-[#1A1A1A]">Date</p>
+            <p className="text-[14px] text-[#1A1A1A] mb-[6px]">Date</p>
 
             <div
               className="border rounded-[8px] px-4 py-2 cursor-pointer relative w-[300px]"
@@ -168,7 +177,7 @@ const ScheduleCampaign = ({
           </div>
 
           <div>
-            <p className="text-[14px] text-[#1A1A1A]">Time (GMT+1)</p>
+            <p className="text-[14px] text-[#1A1A1A] mb-[6px]">Time (GMT+1)</p>
             <div
               className="border rounded-[8px] px-4 py-2 cursor-pointer relative w-[300px]"
               onClick={() => setShowClock(!showClock)}
