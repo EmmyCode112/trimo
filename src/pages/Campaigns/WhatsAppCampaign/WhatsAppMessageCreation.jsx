@@ -48,7 +48,7 @@ const WhatsAppMessageCreation = () => {
           <Button
             label="Previous"
             className="text-[#383268] hover:bg-[] rounded-[8px] py-2 px-[18px] border-[#383268]"
-            onClick={() => navigate("/campaigns/smsCampaign")}
+            onClick={() => navigate("/dashboard/campaigns/WhatsApp-campaig")}
           />
           <Button
             label="Next"

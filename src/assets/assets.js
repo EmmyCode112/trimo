@@ -21,6 +21,8 @@ import checkboxActive from "./Icons/Checkbox.png";
 import editIcon from "./Icons/edit-2.png";
 import trashIcon from "./Icons/trash.png";
 import FolderIcon from "./Icons/Folder.png";
+import emptyUsers from "./Icons/profile-picture.png";
+import triimoWebsiteLogo from "./Icons/1.png";
 // omo bro
 import TriimoIcon from "./Icons/trimo-logo.png";
 import homeIcon from "./Icons/home-2.png";
@@ -74,6 +76,7 @@ import errorIcon from "./Icons/errorIcon.png";
 import toastSuccessIcon from "./Icons/errorIcon.png";
 import ErrorWarning from "./Icons/warning-1.png";
 import successWarning from "./Icons/tick-square.png";
+import dashboardPreview from "./Icons/Body.png";
 import whastsAppPreviewPanel from "./Icons/whatsAppPrev.png";
 // import addCircle from './Icons/campaign/add-circle.svg'
 import tremplate_campaign_update from "./templates/campaign_update.png";
@@ -218,6 +221,9 @@ export const Icons = {
   emptyPreviewTemplate,
   emptyTemplate,
   addCircle,
+  emptyUsers,
+  triimoWebsiteLogo,
+  dashboardPreview,
 };
 export {
   addCircle,

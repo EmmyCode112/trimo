@@ -19,12 +19,21 @@ const Signin = () => {
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleLogin = () => {
-    const userData = { email }; // You can modify this as needed
-    Cookies.set("authToken", "dummyAuthToken", { expires: 7 });
+    console.log("Login function triggered");
+
+    const dummyToken = "dummyAuthToken"; // Replace with real token from API
+    const userData = { email, token: dummyToken }; // Ensure token is included
+
+    Cookies.set("authToken", dummyToken, { expires: 7 });
+    Cookies.set("userData", JSON.stringify(userData), { expires: 7 });
+
+    console.log("Dispatching loginSuccess with", userData);
     dispatch(loginSuccess(userData));
-    navigate("/");
+
+    console.log("Stored authToken:", Cookies.get("authToken")); // Debugging
+
+    navigate("/dashboard"); // Navigate immediately
   };
 
   const validateEmail = (email) => {
@@ -33,32 +42,32 @@ const Signin = () => {
     return emailRegex.test(email);
   };
 
-  const validatePassword = (password) => {
-    return password.length >= 8;
-  };
-
-  const isFormFilled =
-    email && password && validateEmail(email) && validatePassword(password);
+  const validatePassword = (password) => password.length >= 8;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let formErrors = {};
+
     if (!validateEmail(email)) {
-      setErrors((prev) => ({ ...prev, email: "Invalid email format." }));
+      formErrors.email = "Invalid email format.";
     }
 
     if (!validatePassword(password)) {
-      setErrors((prev) => ({
-        ...prev,
-        password: "Password must be at least 8 characters long.",
-      }));
+      formErrors.password = "Password must be at least 8 characters long.";
     }
 
-    if (validateEmail(email) && validatePassword(password)) {
-      setErrors({ email: "", password: "" });
-      handleLogin();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
     }
+
+    // Clear errors and proceed with login
+    setErrors({});
+    handleLogin();
   };
+  const isFormFilled =
+    email && password && validateEmail(email) && validatePassword(password);
 
   return (
     <div className="flex h-[100vh] overflow-hidden w-[100vw] pr-[65px] max-lg:px-5 max-sm:py-5">

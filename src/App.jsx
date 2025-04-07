@@ -27,7 +27,15 @@ import Notification from "./pages/Notification/Notification";
 import Groups from "./pages/Groups/Groups";
 import CampaignPage from "./pages/Campaigns/EmailCampaign";
 import Home from "./pages/Campaigns/Email/page";
-// import CampaignPage from "./pages/Campaigns/Campaigns";
+import LandingPage from "./UnauthenticatedPages/Home/LandingPage";
+import HomeLandingPage from "./UnauthenticatedPages/Home/HomeLandingPage";
+import ContactUs from "./UnauthenticatedPages/Contact/ContactUs";
+import About from "./UnauthenticatedPages/About/About";
+import UseCases from "./UnauthenticatedPages/UseCases/UseCases";
+import Community from "./UnauthenticatedPages/Community/Community";
+import PrivacyPolicy from "./UnauthenticatedPages/PrivacyPolicy/PrivacyPolicy";
+import ServiceAgreement from "./UnauthenticatedPages/ServiceAgreement/ServiceAgreement";
+import CodeOfConduct from "./UnauthenticatedPages/CodeOfConduct/CodeOfConduct";
 
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Navbar from "./Components/Navbar/Navbar";
@@ -36,8 +44,6 @@ import { loginSuccess, logout } from "@/redux/slice/authSlice";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [openFormModal, setOpenFormModal] = useState(false);
-
   const dispatch = useDispatch();
 
   // Load authentication state on mount
@@ -52,57 +58,55 @@ const App = () => {
 
   // Handle sidebar visibility based on screen size
   useEffect(() => {
-    const handleResize = () => {
-      setIsSidebarOpen(window.innerWidth > 768);
-    };
-
-    // Set initial state
+    const handleResize = () => setIsSidebarOpen(window.innerWidth > 768);
     handleResize();
-
-    // Add event listener
     window.addEventListener("resize", handleResize);
-
-    // Cleanup
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const handleLogout = () => dispatch(logout());
 
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        {!isAuthenticated ? (
-          <>
-            <Route path="/sign-in" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/reset-password" element={<PasswordReset />} />
-            <Route path="/account-setup" element={<SetUp />} />
-            <Route path="*" element={<Navigate to="/sign-in" />} />
-          </>
-        ) : (
-          // Authenticated Layout for authenticated users
-          <Route
-            path="/*"
-            element={
+        <Route path="/" element={<LandingPage />}>
+          <Route index element={<HomeLandingPage />} />
+          <Route path="contact-us" element={<ContactUs />} />
+          <Route path="about-us" element={<About />} />
+          <Route path="use-cases" element={<UseCases />} />
+          <Route path="community" element={<Community />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="legal-agreement" element={<ServiceAgreement />} />
+          <Route path="code-of-conduct" element={<CodeOfConduct />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Route>
+
+        {/* Auth Routes */}
+        <Route
+          path="/sign-in"
+          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signin />}
+        />
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Signup />}
+        />
+        <Route path="/reset-password" element={<PasswordReset />} />
+        <Route path="/account-setup" element={<SetUp />} />
+
+        {/* Protected Routes (Authenticated Only) */}
+        <Route
+          path="/dashboard/*"
+          element={
+            isAuthenticated ? (
               <div className="h-[100vh] overflow-hidden flex relative">
-                {/* Overlay for mobile */}
                 {isSidebarOpen && (
                   <div
                     className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-20"
                     onClick={() => setIsSidebarOpen(false)}
                   />
                 )}
-
-                {/* Sidebar with responsive positioning */}
                 <div
                   className={`${
                     isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -113,54 +117,52 @@ const App = () => {
 
                 <div className="flex-1 overflow-y-scroll">
                   <Navbar
-                    toggleSidebar={toggleSidebar}
+                    toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
                     isSidebarOpen={isSidebarOpen}
                   />
                   <Routes>
                     <Route
-                      path="/"
+                      index
                       element={<Dashboard handleLogout={handleLogout} />}
                     />
-                    <Route path="/campaigns" element={<Campaigns />} />
-                    {/* <Route
-                      path="/campaigns/create"
-                      element={<CampaignPage />}
-                    /> */}
-                    <Route path="/contacts" element={<Contact />} />
-                    <Route path="/campaigns/email" element={<CampaignPage />} />
-                    <Route path="/analytics" element={<Analytics />} />
-                    <Route path="/settings" element={<Setting />} />
-                    <Route path="/wallet" element={<Wallet />} />
-                    <Route path="/groups" element={<Groups />} />
-                    <Route path="/notifications" element={<Notification />} />
-                    {/* <Route path={`/campaigns/${campaignName}`} element={<SmsCampaign />} />  */}
+                    <Route path="campaigns" element={<Campaigns />} />
+                    <Route path="contacts" element={<Contact />} />
+                    <Route path="campaigns/email" element={<CampaignPage />} />
+                    <Route path="analytics" element={<Analytics />} />
+                    <Route path="settings" element={<Setting />} />
+                    <Route path="wallet" element={<Wallet />} />
+                    <Route path="groups" element={<Groups />} />
+                    <Route path="notifications" element={<Notification />} />
                     <Route
-                      path={`/campaigns/smsCampaign`}
+                      path="campaigns/smsCampaign"
                       element={<SmsCampaign />}
                     />
-                    <Route path={`/campaigns/template`} element={<Home />} />
+                    <Route path="campaigns/template" element={<Home />} />
                     <Route
-                      path={`/campaigns/WhatsApp-campaign`}
+                      path="campaigns/WhatsApp-campaign"
                       element={<WhatsAppCampaign />}
                     />
                     <Route
-                      path={`/campaigns/WhatsApp-campaign/create`}
+                      path="campaigns/WhatsApp-campaign/create"
                       element={<WhatsAppMessageCreation />}
                     />
-
                     <Route
-                      path={`/campaigns/smsCampaign/create`}
+                      path="campaigns/smsCampaign/create"
                       element={<MessageCreation />}
                     />
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/dashboard" replace />}
+                    />
                   </Routes>
-
                   <CampaignManager />
                 </div>
               </div>
-            }
-          />
-        )}
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
       </Routes>
     </Router>
   );

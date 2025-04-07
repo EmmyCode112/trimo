@@ -259,12 +259,6 @@ const Contact = () => {
 
   return (
     <div className="px-[31px] py-[32px] flex flex-col gap-[22px]">
-      <div
-        onClick={() => navigate("/groups")}
-        className="cursor-pointer text-[#EBEBF0]"
-      >
-        <p>Groups</p>
-      </div>
       <div className="flex justify-between items-center flex-wrap gap-[20px]">
         <header>
           <h1 className="text-[#1A1A1A] text-[24px] font-medium">

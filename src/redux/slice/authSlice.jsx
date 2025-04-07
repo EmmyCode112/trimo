@@ -1,11 +1,19 @@
 import Cookies from "js-cookie";
 import { createSlice } from "@reduxjs/toolkit";
 
-const token = Cookies.get("authToken"); // Retrieve token from cookies
+// Retrieve token and userData safely
+const token = Cookies.get("authToken") || null;
+let userData = null;
+
+try {
+  userData = JSON.parse(Cookies.get("userData") || "{}");
+} catch (error) {
+  userData = null;
+}
 
 const initialState = {
-  isAuthenticated: !!token, // If token exists, set isAuthenticated to true
-  user: token ? JSON.parse(Cookies.get("userData") || "{}") : null, // Retrieve user data
+  isAuthenticated: !!token, // Authenticated if token exists
+  user: userData, // Load user data from cookies
 };
 
 const authSlice = createSlice({
@@ -16,7 +24,11 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
 
-      Cookies.set("authToken", action.payload.token, { expires: 7 }); // Store token for 7 days
+      // Ensure token exists in payload
+      if (action.payload.token) {
+        Cookies.set("authToken", action.payload.token, { expires: 7 });
+      }
+
       Cookies.set("userData", JSON.stringify(action.payload), { expires: 7 });
     },
     logout(state) {
